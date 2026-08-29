@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kainthla Travel AI | Shrikhand</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#050708;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+/* 360 VIEW */
+#viewer{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    cursor:grab;
+    touch-action:none;
+}
+
+#viewer.dragging{
+    cursor:grabbing;
+}
+
+#panorama{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:100vw;
+    height:100vh;
+
+    background-image:url("mountain-360.webp");
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+
+    transform:translate(-50%,-50%) scale(1.15);
+    will-change:transform,background-position;
+}
+
+/* DARK CINEMATIC OVERLAY */
+#viewer::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.45),
+            transparent 25%,
+            transparent 65%,
+            rgba(0,0,0,.55)
+        );
+}
+
+/* NAVBAR */
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:25px 30px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    z-index:10;
+    color:white;
+}
+
+.logo{
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:3px;
+}
+
+.logo span{
+    display:block;
+    margin-top:4px;
+    font-size:9px;
+    letter-spacing:2px;
+    opacity:.65;
+    font-weight:400;
+}
+
+.nav-right{
+    display:flex;
+    gap:10px;
+}
+
+.nav-btn{
+    border:1px solid rgba(255,255,255,.3);
+    background:rgba(0,0,0,.18);
+    backdrop-filter:blur(10px);
+
+    color:white;
+    padding:10px 17px;
+    border-radius:30px;
+
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+/* CENTER CONTENT */
+.hero{
+    position:fixed;
+    z-index:5;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    text-align:center;
+    color:white;
+    width:90%;
+    pointer-events:none;
+}
+
+.location{
+    font-size:10px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    opacity:.8;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(42px,9vw,100px);
+    line-height:.9;
+    letter-spacing:-3px;
+    font-weight:700;
+    text-shadow:0 5px 30px rgba(0,0,0,.5);
+}
+
+.hero h1 span{
+    display:block;
+    font-weight:300;
+    font-size:.42em;
+    letter-spacing:8px;
+    margin-top:15px;
+}
+
+.subtitle{
+    margin-top:28px;
+    font-size:12px;
+    letter-spacing:2px;
+    opacity:.8;
+}
+
+/* DRAG INDICATOR */
+.drag{
+    position:fixed;
+    z-index:8;
+
+    bottom:34px;
+    left:50%;
+    transform:translateX(-50%);
+
+    color:white;
+    text-align:center;
+
+    pointer-events:none;
+}
+
+.drag-line{
+    width:100px;
+    height:1px;
+    margin:0 auto 12px;
+
+    background:rgba(255,255,255,.65);
+}
+
+.drag p{
+    font-size:9px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    opacity:.7;
+}
+
+/* SIDE INFO */
+.info{
+    position:fixed;
+    right:28px;
+    bottom:30px;
+    z-index:8;
+
+    color:white;
+    text-align:right;
+}
+
+.info small{
+    display:block;
+    font-size:8px;
+    letter-spacing:2px;
+    opacity:.55;
+    margin-bottom:5px;
+}
+
+.info strong{
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+/* LOADING */
+#loading{
+    position:fixed;
+    inset:0;
+    z-index:30;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#050708;
+    color:white;
+
+    font-size:10px;
+    letter-spacing:4px;
+
+    transition:opacity .8s ease;
+}
+
+#loading.hide{
+    opacity:0;
+    pointer-events:none;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+    .nav{
+        padding:20px;
+    }
+
+    .logo{
+        font-size:13px;
+    }
+
+    .nav-btn{
+        padding:8px 12px;
+        font-size:9px;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .location{
+        letter-spacing:3px;
+    }
+
+    .info{
+        display:none;
+    }
+
+    .drag{
+        bottom:25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loading">ENTERING SHRIKHAND</div>
+
+<!-- 360 VIEW -->
+<div id="viewer">
+    <div id="panorama"></div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav">
+
+    <div class="logo">
+        KAINTHLA
+        <span>TRAVEL AI</span>
+    </div>
+
+    <div class="nav-right">
+        <div class="nav-btn">EXPLORE</div>
+        <div class="nav-btn">360°</div>
+    </div>
+
+</div>
+
+<!-- HERO -->
+<div class="hero">
+
+    <div class="location">
+        HIMACHAL PRADESH · INDIA
+    </div>
+
+    <h1>
+        SHRIKHAND
+        <span>MAHADEV</span>
+    </h1>
+
+    <div class="subtitle">
+        DRAG TO EXPLORE THE MOUNTAINS
+    </div>
+
+</div>
+
+<!-- DRAG -->
+<div class="drag">
+    <div class="drag-line"></div>
+    <p>← Drag / Swipe →</p>
+</div>
+
+<!-- INFO -->
+<div class="info">
+    <small>IMMERSIVE DESTINATION</small>
+    <strong>SHRIKHAND · 360°</strong>
+</div>
+
+<script>
+
+const viewer = document.getElementById("viewer");
+const panorama = document.getElementById("panorama");
+const loading = document.getElementById("loading");
+
+let dragging = false;
+let startX = 0;
+let startY = 0;
+
+let offsetX = 50;
+let offsetY = 50;
+
+let velocityX = 0;
+let lastX = 0;
+
+const sensitivity = 0.10;
+
+/* IMAGE LOAD */
+const img = new Image();
+
+img.src = "mountain-360.webp";
+
+img.onload = () => {
+    setTimeout(() => {
+        loading.classList.add("hide");
+    },500);
+};
+
+/* MOUSE DOWN */
+viewer.addEventListener("mousedown",(e)=>{
+
+    dragging = true;
+
+    viewer.classList.add("dragging");
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    lastX = e.clientX;
+});
+
+/* MOUSE MOVE */
+window.addEventListener("mousemove",(e)=>{
+
+    if(!dragging) return;
+
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - startY;
+
+    offsetX -= dx * sensitivity;
+    offsetY -= dy * sensitivity;
+
+    offsetY = Math.max(25,Math.min(75,offsetY));
+
+    velocityX = dx;
+
+    lastX = e.clientX;
+    startY = e.clientY;
+
+    updateView();
+});
+
+/* MOUSE UP */
+window.addEventListener("mouseup",()=>{
+
+    dragging = false;
+
+    viewer.classList.remove("dragging");
+
+});
+
+/* TOUCH START */
+viewer.addEventListener("touchstart",(e)=>{
+
+    dragging = true;
+
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+
+    lastX = startX;
+
+},{passive:true});
+
+/* TOUCH MOVE */
+viewer.addEventListener("touchmove",(e)=>{
+
+    if(!dragging) return;
+
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+
+    const dx = x - lastX;
+    const dy = y - startY;
+
+    offsetX -= dx * sensitivity;
+    offsetY -= dy * sensitivity;
+
+    offsetY = Math.max(25,Math.min(75,offsetY));
+
+    lastX = x;
+    startY = y;
+
+    updateView();
+
+},{passive:true});
+
+/* TOUCH END */
+viewer.addEventListener("touchend",()=>{
+
+    dragging = false;
+
+});
+
+/* UPDATE */
+function updateView(){
+
+    panorama.style.backgroundPosition =
+        `${offsetX}% ${offsetY}%`;
+
+}
+
+/* SMALL INERTIA */
+function inertia(){
+
+    if(!dragging && Math.abs(velocityX) > .1){
+
+        offsetX -= velocityX * .04;
+
+        velocityX *= .94;
+
+        updateView();
+
+    }
+
+    requestAnimationFrame(inertia);
+}
+
+inertia();
+
+</script>
+
+</body>
+  </html>

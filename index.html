@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#05070b">
+<meta name="theme-color" content="#050914">
 
 <title>Kainthla Travel AI</title>
 
 <style>
+
+/* ================================
+   RESET
+================================ */
 
 *{
     margin:0;
@@ -20,657 +23,449 @@
     box-sizing:border-box;
 }
 
-html,
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     width:100%;
-    min-height:100%;
-    background:#05070b;
+    min-height:100vh;
+    overflow-x:hidden;
+    background:#050914;
     color:#fff;
     font-family:
         Inter,
-        system-ui,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
 }
 
-body{
-    overflow-x:hidden;
-}
 
-/* =========================
-   GLOBAL
-========================= */
+/* ================================
+   360 BACKGROUND
+================================ */
 
-button,
-input{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-/* =========================
-   360 IMAGE CONFIG
-========================= */
-
-:root{
-
-    --travel-360-image:
-        url("1aebea2f-ed66-4843-80ef-f381f65cfe50.web");
-
-    --ai-api-url:
-        "https://script.google.com/macros/s/AKfycbwxZhBDGOTa4TFN2XAg_ihpIuvVbjJPiDzGt3vpyfuOqZdUXHzOYZ-YoP1Pe7tJZk-ldg/exec";
-
-}
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.background{
-
+#travel360{
     position:fixed;
-
     inset:0;
-
-    z-index:0;
-
+    width:100%;
+    height:100%;
+    z-index:-5;
     overflow:hidden;
-
     background:
         radial-gradient(
             circle at 50% 35%,
-            rgba(35,90,150,.18),
-            transparent 42%
+            rgba(40,120,180,.28),
+            transparent 45%
         ),
-        #05070b;
-
+        linear-gradient(
+            180deg,
+            #071321 0%,
+            #030711 100%
+        );
 }
 
-.background::before{
-
+#travel360::before{
     content:"";
-
     position:absolute;
-
-    inset:-20%;
-
-    background-image:
-        var(--travel-360-image);
-
-    background-size:cover;
-
-    background-position:center;
-
-    opacity:.12;
-
-    filter:
-        blur(3px)
-        saturate(.8);
-
-    transform:scale(1.08);
-
+    inset:-10%;
+    background:
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(0,190,255,.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 65%,
+            rgba(110,70,255,.14),
+            transparent 32%
+        );
+    filter:blur(30px);
+    animation:
+        backgroundMove 12s ease-in-out infinite alternate;
 }
 
-.background::after{
+@keyframes backgroundMove{
 
-    content:"";
+    0%{
+        transform:scale(1)
+        translate3d(-2%,0,0);
+    }
 
-    position:absolute;
+    100%{
+        transform:scale(1.12)
+        translate3d(2%,-2%,0);
+    }
+}
 
+
+/* ================================
+   DARK OVERLAY
+================================ */
+
+.bg-overlay{
+    position:fixed;
     inset:0;
+    z-index:-4;
 
     background:
         linear-gradient(
-            to bottom,
-            rgba(5,7,11,.35),
-            rgba(5,7,11,.82)
+            180deg,
+            rgba(2,7,18,.28),
+            rgba(2,6,15,.72)
         );
 
+    pointer-events:none;
 }
 
-/* =========================
+
+/* ================================
+   NOISE
+================================ */
+
+.noise{
+    position:fixed;
+    inset:0;
+    z-index:20;
+
+    pointer-events:none;
+
+    opacity:.035;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+
+/* ================================
    APP
-========================= */
+================================ */
 
 .app{
-
     position:relative;
-
-    z-index:1;
-
-    width:100%;
-
     min-height:100vh;
-
+    width:100%;
 }
 
-/* =========================
+
+/* ================================
    NAVBAR
-========================= */
+================================ */
 
 .navbar{
-
-    width:100%;
-
-    padding:
-        18px
-        20px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
     position:relative;
 
-    z-index:10;
-
-}
-
-.logo{
+    width:100%;
+    padding:
+        18px
+        18px
+        10px;
 
     display:flex;
-
     align-items:center;
+    justify-content:space-between;
 
-    gap:10px;
-
-    font-size:17px;
-
-    font-weight:700;
-
-    letter-spacing:.4px;
-
+    z-index:10;
 }
 
-.logo-mark{
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
 
+.brand-mark{
     width:38px;
     height:38px;
 
     border-radius:13px;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
+
+    font-size:19px;
 
     background:
         linear-gradient(
             135deg,
-            #ffffff,
-            #b9c7d8
+            rgba(255,255,255,.22),
+            rgba(255,255,255,.06)
         );
 
-    color:#05070b;
+    border:
+        1px solid
+        rgba(255,255,255,.16);
 
     box-shadow:
         0 8px 30px
-        rgba(255,255,255,.12);
+        rgba(0,0,0,.25);
 
+    backdrop-filter:blur(16px);
 }
 
-.logo-text{
-
-    display:flex;
-
-    flex-direction:column;
-
+.brand-text{
+    line-height:1.05;
 }
 
-.logo-text small{
+.brand-name{
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:.3px;
+}
+
+.brand-sub{
+    margin-top:3px;
 
     font-size:9px;
-
-    opacity:.5;
-
     letter-spacing:1.8px;
 
+    color:rgba(255,255,255,.52);
+
     text-transform:uppercase;
-
 }
 
-/* =========================
-   HERO
-========================= */
-
-.hero{
-
-    min-height:
-        calc(100vh - 75px);
-
+.status{
     display:flex;
-
-    flex-direction:column;
-
     align-items:center;
+    gap:7px;
 
-    justify-content:center;
+    padding:8px 11px;
 
-    padding:
-        35px
-        20px
-        110px;
-
-    text-align:center;
-
-}
-
-.badge{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    padding:
-        8px
-        13px;
-
-    border:1px solid
-        rgba(255,255,255,.12);
-
-    border-radius:999px;
+    border-radius:30px;
 
     background:
-        rgba(255,255,255,.045);
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
 
     backdrop-filter:blur(14px);
 
-    color:
-        rgba(255,255,255,.72);
+    font-size:10px;
+    color:rgba(255,255,255,.72);
+}
 
-    font-size:11px;
+.status-dot{
+    width:7px;
+    height:7px;
 
-    letter-spacing:1.2px;
+    border-radius:50%;
+
+    background:#54e69a;
+
+    box-shadow:
+        0 0 12px
+        rgba(84,230,154,.8);
+
+    animation:
+        pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.45;
+        transform:scale(.75);
+    }
+}
+
+
+/* ================================
+   HERO
+================================ */
+
+.hero{
+    width:100%;
+
+    padding:
+        35px
+        18px
+        25px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    text-align:center;
+}
+
+.hero-image-wrap{
+    position:relative;
+
+    width:min(76vw,310px);
+    aspect-ratio:1/1;
+
+    margin-bottom:24px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hero-image-wrap::before{
+    content:"";
+
+    position:absolute;
+    inset:-12px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    box-shadow:
+        0 0 80px
+        rgba(0,170,255,.14);
+
+    animation:
+        rotateGlow 18s linear infinite;
+}
+
+@keyframes rotateGlow{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.hero-image{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    display:block;
+
+    border:
+        1px solid
+        rgba(255,255,255,.18);
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.45);
+
+    background:
+        rgba(255,255,255,.05);
+}
+
+.hero-kicker{
+    margin-bottom:11px;
+
+    font-size:10px;
+    font-weight:700;
+
+    letter-spacing:3px;
 
     text-transform:uppercase;
 
-    margin-bottom:22px;
-
-}
-
-.badge-dot{
-
-    width:6px;
-    height:6px;
-
-    border-radius:50%;
-
-    background:#9fe7ff;
-
-    box-shadow:
-        0 0 14px #9fe7ff;
-
+    color:
+        rgba(255,255,255,.55);
 }
 
 .hero h1{
-
-    max-width:800px;
+    max-width:700px;
 
     font-size:
-        clamp(
-            42px,
-            11vw,
-            92px
-        );
+        clamp(38px,11vw,72px);
 
     line-height:.95;
 
-    letter-spacing:-4px;
+    font-weight:900;
 
-    font-weight:800;
-
-}
-
-.hero h1 span{
+    letter-spacing:-2.5px;
 
     background:
         linear-gradient(
-            120deg,
-            #ffffff,
-            #8da9c7,
-            #ffffff
+            180deg,
+            #ffffff 15%,
+            #a9c7e8 100%
         );
 
     -webkit-background-clip:text;
-
     background-clip:text;
 
     color:transparent;
-
 }
 
-.hero p{
+.hero-description{
+    max-width:520px;
 
-    max-width:580px;
-
-    margin-top:22px;
-
-    color:
-        rgba(255,255,255,.58);
-
-    font-size:
-        clamp(
-            14px,
-            3.5vw,
-            17px
-        );
-
-    line-height:1.7;
-
-}
-
-/* =========================
-   START BUTTON
-========================= */
-
-.start-btn{
-
-    margin-top:35px;
-
-    padding:
-        15px
-        24px;
-
-    border:1px solid
-        rgba(255,255,255,.2);
-
-    border-radius:16px;
-
-    background:
-        rgba(255,255,255,.09);
-
-    color:#fff;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    transition:
-        .25s ease;
-
-    backdrop-filter:blur(15px);
-
-}
-
-.start-btn:hover{
-
-    transform:
-        translateY(-3px);
-
-    background:
-        rgba(255,255,255,.15);
-
-}
-
-/* =========================
-   AI CHAT
-========================= */
-
-.chat-section{
-
-    width:100%;
-
-    max-width:850px;
-
-    margin:
-        0 auto;
-
-    padding:
-        20px;
-
-}
-
-.chat-box{
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius:25px;
-
-    background:
-        rgba(10,14,21,.72);
-
-    backdrop-filter:
-        blur(25px);
-
-    box-shadow:
-        0 30px 80px
-        rgba(0,0,0,.35);
-
-    overflow:hidden;
-
-}
-
-.chat-header{
-
-    padding:18px 20px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-.ai-orb{
-
-    width:38px;
-    height:38px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #fff,
-            #8da9c7 35%,
-            #26384c 70%,
-            #0b1119
-        );
-
-    box-shadow:
-        0 0 25px
-        rgba(141,169,199,.3);
-
-}
-
-.chat-title{
+    margin-top:17px;
 
     font-size:14px;
-
-    font-weight:700;
-
-}
-
-.chat-status{
-
-    font-size:10px;
+    line-height:1.65;
 
     color:
-        rgba(255,255,255,.42);
-
-    margin-top:3px;
-
+        rgba(255,255,255,.62);
 }
 
-.messages{
 
-    height:330px;
+/* ================================
+   GLASS CONTAINER
+================================ */
 
-    overflow-y:auto;
-
-    padding:18px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-}
-
-.message{
-
-    display:flex;
-
-}
-
-.message.user{
-
-    justify-content:flex-end;
-
-}
-
-.bubble{
-
-    max-width:82%;
-
-    padding:
-        12px
-        15px;
-
-    border-radius:16px;
-
+.glass{
     background:
-        rgba(255,255,255,.07);
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.105),
+            rgba(255,255,255,.035)
+        );
 
     border:
         1px solid
-        rgba(255,255,255,.07);
+        rgba(255,255,255,.12);
 
-    color:
-        rgba(255,255,255,.85);
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.28);
 
-    font-size:13px;
+    backdrop-filter:
+        blur(22px)
+        saturate(130%);
 
-    line-height:1.6;
-
+    -webkit-backdrop-filter:
+        blur(22px)
+        saturate(130%);
 }
 
-.message.user .bubble{
 
-    background:
-        rgba(255,255,255,.13);
+/* ================================
+   RESPONSIVE
+================================ */
 
-    color:#fff;
-
-}
-
-/* =========================
-   INPUT
-========================= */
-
-.chat-input-area{
-
-    padding:14px;
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.07);
-
-    display:flex;
-
-    gap:9px;
-
-}
-
-#chatInput{
-
-    flex:1;
-
-    min-width:0;
-
-    border:1px solid
-        rgba(255,255,255,.1);
-
-    outline:none;
-
-    border-radius:14px;
-
-    padding:
-        13px
-        14px;
-
-    background:
-        rgba(255,255,255,.045);
-
-    color:#fff;
-
-}
-
-#chatInput::placeholder{
-
-    color:
-        rgba(255,255,255,.3);
-
-}
-
-#sendBtn{
-
-    width:48px;
-
-    border:0;
-
-    border-radius:14px;
-
-    background:#fff;
-
-    color:#05070b;
-
-    font-size:18px;
-
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:600px){
+@media(min-width:700px){
 
     .navbar{
-
         padding:
+            25px
+            35px
             15px;
-
     }
 
     .hero{
-
-        padding-top:45px;
-
+        padding-top:55px;
     }
 
-    .hero h1{
-
-        letter-spacing:-2.5px;
-
-    }
-
-    .messages{
-
-        height:300px;
-
+    .hero-description{
+        font-size:15px;
     }
 
 }
@@ -681,338 +476,990 @@ a{
 
 <body>
 
-<div class="background"></div>
+<!-- 360° BACKGROUND -->
+<div id="travel360"></div>
+
+<!-- DARK CINEMATIC OVERLAY -->
+<div class="bg-overlay"></div>
+
+<!-- FILM GRAIN -->
+<div class="noise"></div>
+
 
 <div class="app">
 
-    <nav class="navbar">
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-        <div class="logo">
+        <div class="brand">
 
-            <div class="logo-mark">
-                ✦
+            <div class="brand-mark">
+                ✈️
             </div>
 
-            <div class="logo-text">
+            <div class="brand-text">
 
-                KAINTHLA TRAVEL AI
+                <div class="brand-name">
+                    Kainthla
+                </div>
 
-                <small>
-                    Explore Beyond
-                </small>
+                <div class="brand-sub">
+                    Travel AI
+                </div>
 
             </div>
 
         </div>
 
-    </nav>
 
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            AI Online
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
     <main class="hero">
 
-        <div class="badge">
+        <div class="hero-image-wrap">
 
-            <span class="badge-dot"></span>
-
-            AI TRAVEL COMPANION
+            <img
+                class="hero-image"
+                src="1aebea2f-ed66-4843-80ef-f381f65cfe50.web"
+                alt="Kainthla Travel AI"
+            >
 
         </div>
 
+
+        <div class="hero-kicker">
+            Explore Beyond
+        </div>
+
+
         <h1>
-
-            Find your next
-            <span>journey.</span>
-
+            Where will<br>
+            you go?
         </h1>
 
-        <p>
 
-            Discover destinations, treks, routes,
-            stays and experiences with your personal
-            Kainthla Travel AI.
-
+        <p class="hero-description">
+            Tell Kainthla Travel AI what kind of journey
+            you're looking for. Discover destinations,
+            experiences and hidden places made for you.
         </p>
 
-        <button
-            class="start-btn"
-            onclick="openTravelAI()">
+    </main>
+        <!-- ================================
+         AI TRAVEL SEARCH
+    ================================= -->
 
-            Start exploring
+    <section class="ai-section">
 
-            <span>→</span>
+        <div class="ai-card glass">
 
-        </button>
+            <div class="ai-header">
 
-        <section
-            class="chat-section"
-            id="travelAI">
+                <div class="ai-icon">
+                    ✦
+                </div>
 
-            <div class="chat-box">
+                <div>
+                    <div class="ai-title">
+                        Ask Travel AI
+                    </div>
 
-                <div class="chat-header">
+                    <div class="ai-subtitle">
+                        Your journey starts with a question
+                    </div>
+                </div>
 
-                    <div class="ai-orb"></div>
+            </div>
 
-                    <div>
 
-                        <div class="chat-title">
-                            Kainthla Travel AI
-                        </div>
+            <!-- QUESTION INPUT -->
 
-                        <div class="chat-status">
-                            Your intelligent travel companion
-                        </div>
+            <div class="question-box">
 
+                <textarea
+                    id="questionInput"
+                    placeholder="Where should I travel this weekend?"
+                    maxlength="500"
+                    rows="3"
+                ></textarea>
+
+                <div class="input-bottom">
+
+                    <span id="charCount">
+                        0 / 500
+                    </span>
+
+                    <span class="input-hint">
+                        AI powered
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- GET ANSWER BUTTON -->
+
+            <button
+                id="answerBtn"
+                class="answer-btn"
+                type="button"
+            >
+
+                <span class="btn-icon">
+                    ✦
+                </span>
+
+                <span id="btnText">
+                    GET ANSWER
+                </span>
+
+                <span class="btn-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <!-- LOADING -->
+
+            <div
+                id="loadingBox"
+                class="loading-box"
+                style="display:none;"
+            >
+
+                <div class="loading-spinner"></div>
+
+                <span>
+                    Finding the best answer...
+                </span>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="errorBox"
+                class="message-box error-message"
+                style="display:none;"
+            >
+
+                <span class="message-icon">
+                    ⚠
+                </span>
+
+                <span id="errorText">
+                    Something went wrong.
+                </span>
+
+            </div>
+
+
+            <!-- AI ANSWER -->
+
+            <div
+                id="answerBox"
+                class="answer-box"
+                style="display:none;"
+            >
+
+                <div class="answer-top">
+
+                    <div class="answer-label">
+                        ✦ AI RESPONSE
+                    </div>
+
+                    <div class="answer-status">
+                        READY
                     </div>
 
                 </div>
 
+
                 <div
-                    class="messages"
-                    id="messages">
-
-                </div>
-
-                <div class="chat-input-area">
-
-                    <input
-                        id="chatInput"
-                        type="text"
-                        placeholder="Ask about a destination..."
-                        autocomplete="off">
-
-                    <button
-                        id="sendBtn"
-                        type="button">
-
-                        ↑
-
-                    </button>
-
-                </div>
+                    id="answerText"
+                    class="answer-text"
+                ></div>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </section>
+
+
+    <!-- ================================
+         QUICK QUESTIONS
+    ================================= -->
+
+    <section class="quick-section">
+
+        <div class="quick-title">
+            Try asking
+        </div>
+
+
+        <div class="quick-list">
+
+            <button
+                class="quick-btn"
+                type="button"
+                data-question="Best places to visit in Himachal Pradesh?"
+            >
+                🏔️ Himachal
+            </button>
+
+            <button
+                class="quick-btn"
+                type="button"
+                data-question="Suggest a peaceful weekend getaway in India."
+            >
+                🌿 Peaceful getaway
+            </button>
+
+            <button
+                class="quick-btn"
+                type="button"
+                data-question="Best budget travel destinations in India?"
+            >
+                💰 Budget travel
+            </button>
+
+            <button
+                class="quick-btn"
+                type="button"
+                data-question="Suggest a romantic destination in India."
+            >
+                ❤️ Romantic trip
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer class="footer">
+
+        <div class="footer-line"></div>
+
+        <p>
+            Crafted for curious travellers
+        </p>
+
+        <span>
+            KAINTHLA TRAVEL AI
+        </span>
+
+    </footer>
+
 
 </div>
 
-<script>
 
-/* =========================
-   CONFIG
-========================= */
+<style>
 
-const TRAVEL_AI_API =
-"https://script.google.com/macros/s/AKfycbwxZhBDGOTa4TFN2XAg_ihpIuvVbjJPiDzGt3vpyfuOqZdUXHzOYZ-YoP1Pe7tJZk-ldg/exec";
+/* =====================================
+   AI SECTION
+===================================== */
 
-const TRAVEL_360_ASSET =
-"1aebea2f-ed66-4843-80ef-f381f65cfe50.web";
+.ai-section{
+    width:100%;
+    padding:
+        15px
+        16px
+        10px;
+}
 
-/* =========================
-   OPEN AI
-========================= */
+.ai-card{
+    width:100%;
+    max-width:680px;
 
-function openTravelAI(){
+    margin:0 auto;
 
-    document
-        .getElementById("travelAI")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+    padding:18px;
+
+    border-radius:26px;
+}
+
+
+/* =====================================
+   AI HEADER
+===================================== */
+
+.ai-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin-bottom:17px;
+}
+
+.ai-icon{
+    width:42px;
+    height:42px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    font-size:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,190,255,.20),
+            rgba(130,80,255,.18)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    box-shadow:
+        inset 0 0 20px
+        rgba(255,255,255,.04);
+}
+
+.ai-title{
+    font-size:15px;
+    font-weight:800;
+}
+
+.ai-subtitle{
+    margin-top:3px;
+
+    font-size:10px;
+
+    color:
+        rgba(255,255,255,.48);
+}
+
+
+/* =====================================
+   QUESTION BOX
+===================================== */
+
+.question-box{
+    padding:13px 14px 9px;
+
+    border-radius:18px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    transition:
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.question-box:focus-within{
+    border-color:
+        rgba(130,205,255,.35);
+
+    background:
+        rgba(0,0,0,.25);
+}
+
+.question-box textarea{
+    width:100%;
+
+    min-height:78px;
+
+    resize:none;
+
+    outline:none;
+    border:none;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:14px;
+    line-height:1.55;
+}
+
+.question-box textarea::placeholder{
+    color:
+        rgba(255,255,255,.34);
+}
+
+.input-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding-top:6px;
+
+    font-size:9px;
+
+    color:
+        rgba(255,255,255,.34);
+}
+
+.input-hint{
+    letter-spacing:.8px;
+    text-transform:uppercase;
+}
+
+
+/* =====================================
+   ANSWER BUTTON
+===================================== */
+
+.answer-btn{
+    position:relative;
+
+    width:100%;
+
+    margin-top:12px;
+
+    min-height:54px;
+
+    border:none;
+    outline:none;
+
+    border-radius:17px;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:12px;
+    font-weight:900;
+
+    letter-spacing:1.5px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(35,155,220,.92),
+            rgba(91,68,210,.92)
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(30,120,220,.20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.answer-btn:hover{
+    filter:brightness(1.08);
+
+    box-shadow:
+        0 16px 45px
+        rgba(40,130,230,.28);
+}
+
+.answer-btn:active{
+    transform:scale(.98);
+}
+
+.answer-btn:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+}
+
+.btn-icon{
+    font-size:16px;
+}
+
+.btn-arrow{
+    position:absolute;
+    right:18px;
+
+    font-size:19px;
+
+    opacity:.75;
+}
+
+
+/* =====================================
+   LOADING
+===================================== */
+
+.loading-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    margin-top:14px;
+
+    padding:14px;
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    font-size:11px;
+
+    color:
+        rgba(255,255,255,.62);
+}
+
+.loading-spinner{
+    width:16px;
+    height:16px;
+
+    border-radius:50%;
+
+    border:
+        2px solid
+        rgba(255,255,255,.18);
+
+    border-top-color:
+        rgba(255,255,255,.9);
+
+    animation:
+        spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
 
 }
 
-/* =========================
+
+/* =====================================
+   MESSAGE BOX
+===================================== */
+
+.message-box{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+
+    margin-top:13px;
+
+    padding:13px;
+
+    border-radius:15px;
+
+    font-size:11px;
+    line-height:1.5;
+}
+
+.error-message{
+    background:
+        rgba(255,70,70,.08);
+
+    border:
+        1px solid
+        rgba(255,100,100,.16);
+
+    color:
+        rgba(255,190,190,.9);
+}
+
+.message-icon{
+    font-size:14px;
+}
+
+
+/* =====================================
+   ANSWER BOX
+===================================== */
+
+.answer-box{
+    margin-top:14px;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    background:
+        rgba(0,0,0,.16);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    animation:
+        answerAppear .4s ease;
+}
+
+@keyframes answerAppear{
+
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.answer-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:12px;
+}
+
+.answer-label{
+    font-size:9px;
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    color:
+        rgba(150,215,255,.85);
+}
+
+.answer-status{
+    padding:4px 7px;
+
+    border-radius:6px;
+
+    font-size:7px;
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    background:
+        rgba(80,220,150,.08);
+
+    color:
+        rgba(110,235,170,.8);
+}
+
+.answer-text{
+    white-space:pre-wrap;
+
+    font-size:13px;
+    line-height:1.7;
+
+    color:
+        rgba(255,255,255,.82);
+}
+
+
+/* =====================================
+   QUICK QUESTIONS
+===================================== */
+
+.quick-section{
+    width:100%;
+    max-width:680px;
+
+    margin:0 auto;
+
+    padding:
+        15px
+        16px
+        10px;
+}
+
+.quick-title{
+    margin-bottom:10px;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    color:
+        rgba(255,255,255,.38);
+}
+
+.quick-list{
+    display:flex;
+
+    gap:8px;
+
+    overflow-x:auto;
+
+    padding-bottom:4px;
+
+    scrollbar-width:none;
+}
+
+.quick-list::-webkit-scrollbar{
+    display:none;
+}
+
+.quick-btn{
+    flex-shrink:0;
+
+    padding:9px 12px;
+
+    border-radius:30px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.055);
+
+    color:
+        rgba(255,255,255,.68);
+
+    font-family:inherit;
+
+    font-size:10px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.quick-btn:hover{
+    background:
+        rgba(255,255,255,.10);
+}
+
+.quick-btn:active{
+    transform:scale(.96);
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.footer{
+    width:100%;
+
+    padding:
+        30px
+        20px
+        35px;
+
+    text-align:center;
+
+    color:
+        rgba(255,255,255,.30);
+}
+
+.footer-line{
+    width:50px;
+    height:1px;
+
+    margin:
+        0 auto
+        14px;
+
+    background:
+        rgba(255,255,255,.14);
+}
+
+.footer p{
+    font-size:9px;
+
+    margin-bottom:5px;
+}
+
+.footer span{
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    color:
+        rgba(255,255,255,.18);
+}
+
+
+/* =====================================
+   DESKTOP
+===================================== */
+
+@media(min-width:700px){
+
+    .ai-section{
+        padding-top:25px;
+    }
+
+    .ai-card{
+        padding:24px;
+    }
+
+    .question-box textarea{
+        font-size:15px;
+    }
+
+    .quick-section{
+        padding-top:20px;
+    }
+
+}
+
+              </style>
+     <script>
+
+/* =====================================
+   KAINTHLA TRAVEL AI
+   API CONFIGURATION
+===================================== */
+
+/*
+   IMPORTANT:
+   Apna existing Google Apps Script
+   endpoint yahan paste karo.
+*/
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwxZhBDGOTa4TFN2XAg_ihpIuvVbjJPiDzGt3vpyfugm0Y8cL4gVvR7mK8sV3g/exec";
+
+
+/* =====================================
    ELEMENTS
-========================= */
+===================================== */
 
-const messages =
-    document.getElementById("messages");
+const questionInput =
+    document.getElementById("questionInput");
 
-const input =
-    document.getElementById("chatInput");
+const answerBtn =
+    document.getElementById("answerBtn");
 
-const sendBtn =
-    document.getElementById("sendBtn");
+const btnText =
+    document.getElementById("btnText");
 
-/* =========================
-   ADD MESSAGE
-========================= */
+const loadingBox =
+    document.getElementById("loadingBox");
 
-function addMessage(text,type){
+const answerBox =
+    document.getElementById("answerBox");
 
-    const message =
-        document.createElement("div");
+const answerText =
+    document.getElementById("answerText");
 
-    message.className =
-        "message " + type;
+const errorBox =
+    document.getElementById("errorBox");
 
-    const bubble =
-        document.createElement("div");
+const errorText =
+    document.getElementById("errorText");
 
-    bubble.className =
-        "bubble";
+const charCount =
+    document.getElementById("charCount");
 
-    bubble.textContent = text;
 
-    message.appendChild(bubble);
+/* =====================================
+   CHARACTER COUNTER
+===================================== */
 
-    messages.appendChild(message);
+questionInput.addEventListener(
+    "input",
+    function(){
 
-    messages.scrollTop =
-        messages.scrollHeight;
+        const length =
+            this.value.length;
 
-}
+        charCount.textContent =
+            length + " / 500";
 
-/* =========================
-   WELCOME
-========================= */
-
-addMessage(
-    "Welcome to Kainthla Travel AI 🌍 Ask me where your next journey should take you.",
-    "ai"
+    }
 );
 
-</script>
 
-</body>
+/* =====================================
+   QUICK QUESTIONS
+===================================== */
 
-</html>
-<script>
+document.querySelectorAll(
+    ".quick-btn"
+).forEach(function(button){
 
-const TRAVEL_AI_API =
-"https://script.google.com/macros/s/AKfycbwxZhBDGOTa4TFN2XAg_ihpIuvVbjJPiDzGt3vpyfuOqZdUXHzOYZ-YoP1Pe7tJZk-ldg/exec";
+    button.addEventListener(
+        "click",
+        function(){
 
-const messages =
-    document.getElementById("messages");
+            const question =
+                this.getAttribute(
+                    "data-question"
+                );
 
-const input =
-    document.getElementById("chatInput");
+            questionInput.value =
+                question;
 
-const sendBtn =
-    document.getElementById("sendBtn");
+            charCount.textContent =
+                question.length + " / 500";
 
+            questionInput.focus();
 
-function addMessage(text, type){
-
-    const message =
-        document.createElement("div");
-
-    message.className =
-        "message " + type;
-
-    const bubble =
-        document.createElement("div");
-
-    bubble.className =
-        "bubble";
-
-    bubble.textContent = text;
-
-    message.appendChild(bubble);
-
-    messages.appendChild(message);
-
-    messages.scrollTop =
-        messages.scrollHeight;
-}
-
-
-function sendMessage(){
-
-  const text = input.value.trim();
-
-  if(!text) return;
-
-  addMessage(text, "user");
-
-  input.value = "";
-
-  const typing = document.createElement("div");
-
-  typing.className = "message ai";
-
-  typing.innerHTML = `
-    <div class="bubble">
-      Thinking<span class="dots">...</span>
-    </div>
-  `;
-
-  messages.appendChild(typing);
-
-  messages.scrollTop = messages.scrollHeight;
-
-  fetch(
-    TRAVEL_AI_API +
-    "?message=" +
-    encodeURIComponent(text)
-  )
-
-  .then(function(response){
-
-    if(!response.ok){
-      throw new Error("API request failed");
-    }
-
-    return response.json();
-
-  })
-
-  .then(function(data){
-
-    typing.remove();
-
-    if(data.success){
-
-      addMessage(
-        data.message,
-        "ai"
-      );
-
-    }else{
-
-      addMessage(
-        data.error || "Sorry, AI response nahi aa paya.",
-        "ai"
-      );
-
-    }
-
-  })
-
-  .catch(function(error){
-
-    typing.remove();
-
-    addMessage(
-      "Connection error. Please try again.",
-      "ai"
+        }
     );
 
-    console.error(error);
-
-  });
-
-}
+});
 
 
-sendBtn.addEventListener(
-    "click",
-    sendMessage
-);
+/* =====================================
+   ENTER KEY
+===================================== */
 
-
-input.addEventListener(
+questionInput.addEventListener(
     "keydown",
-    function(e){
+    function(event){
 
-        if(e.key === "Enter"){
+        /*
+           Mobile par Enter normal rahega.
+           Desktop par Ctrl + Enter se answer.
+        */
 
-            e.preventDefault();
+        if(
+            event.key === "Enter" &&
+            event.ctrlKey
+        ){
 
-            sendMessage();
+            event.preventDefault();
+
+            getTravelAnswer();
 
         }
 
@@ -1020,30 +1467,501 @@ input.addEventListener(
 );
 
 
-function openTravelAI(){
+/* =====================================
+   BUTTON CLICK
+===================================== */
 
-    document
-        .getElementById("travelAI")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+answerBtn.addEventListener(
+    "click",
+    getTravelAnswer
+);
 
-    setTimeout(function(){
 
-        input.focus();
+/* =====================================
+   MAIN AI FUNCTION
+===================================== */
 
-    },500);
+async function getTravelAnswer(){
+
+    const question =
+        questionInput.value.trim();
+
+
+    /* -------------------------------
+       VALIDATION
+    -------------------------------- */
+
+    if(!question){
+
+        showError(
+            "Please enter a travel question first."
+        );
+
+        questionInput.focus();
+
+        return;
+
+    }
+
+
+    if(question.length < 3){
+
+        showError(
+            "Please enter a little more detail so the AI can help you."
+        );
+
+        questionInput.focus();
+
+        return;
+
+    }
+
+
+    /* -------------------------------
+       RESET UI
+    -------------------------------- */
+
+    hideError();
+
+    answerBox.style.display =
+        "none";
+
+    loadingBox.style.display =
+        "flex";
+
+    answerBtn.disabled =
+        true;
+
+    btnText.textContent =
+        "THINKING...";
+
+
+    try{
+
+        /*
+           Google Apps Script ko
+           question bhejna.
+        */
+
+        const url =
+            API_URL +
+            "?question=" +
+            encodeURIComponent(question);
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method:"GET",
+                    redirect:"follow"
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Server returned " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+           API response ke common formats
+           handle kiye gaye hain.
+        */
+
+        let result = "";
+
+
+        if(
+            typeof data === "string"
+        ){
+
+            result =
+                data;
+
+        }
+
+        else if(
+            data.answer
+        ){
+
+            result =
+                data.answer;
+
+        }
+
+        else if(
+            data.response
+        ){
+
+            result =
+                data.response;
+
+        }
+
+        else if(
+            data.result
+        ){
+
+            result =
+                data.result;
+
+        }
+
+        else if(
+            data.message
+        ){
+
+            result =
+                data.message;
+
+        }
+
+
+        if(
+            !result ||
+            !String(result).trim()
+        ){
+
+            throw new Error(
+                "The AI returned an empty response."
+            );
+
+        }
+
+
+        /* -------------------------------
+           SHOW ANSWER
+        -------------------------------- */
+
+        answerText.textContent =
+            String(result).trim();
+
+        answerBox.style.display =
+            "block";
+
+
+        /*
+           Answer tak smooth scroll.
+        */
+
+        setTimeout(
+            function(){
+
+                answerBox.scrollIntoView({
+                    behavior:"smooth",
+                    block:"center"
+                });
+
+            },
+            100
+        );
+
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Travel AI Error:",
+            error
+        );
+
+
+        showError(
+            "Unable to connect with Travel AI right now. Please check your internet connection or try again in a moment."
+        );
+
+    }
+
+    finally{
+
+        loadingBox.style.display =
+            "none";
+
+        answerBtn.disabled =
+            false;
+
+        btnText.textContent =
+            "GET ANSWER";
+
+    }
 
 }
 
 
-addMessage(
-    "Welcome to Kainthla Travel AI 🌍 Ask me about destinations, treks, routes, budgets or travel plans.",
-    "ai"
+/* =====================================
+   ERROR FUNCTIONS
+===================================== */
+
+function showError(message){
+
+    errorText.textContent =
+        message;
+
+    errorBox.style.display =
+        "flex";
+
+}
+
+
+function hideError(){
+
+    errorBox.style.display =
+        "none";
+
+}
+
+
+/* =====================================
+   INITIAL STATE
+===================================== */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        questionInput.value =
+            "";
+
+        charCount.textContent =
+            "0 / 500";
+
+        loadingBox.style.display =
+            "none";
+
+        answerBox.style.display =
+            "none";
+
+        errorBox.style.display =
+            "none";
+
+    }
+);
+
+          </script>   
+      <script>
+
+/* =====================================
+   TRAVEL 360° CINEMATIC MOTION
+===================================== */
+
+const travel360 =
+    document.getElementById("travel360");
+
+let mouseX = 0;
+let mouseY = 0;
+let currentX = 0;
+let currentY = 0;
+
+
+/* Desktop movement */
+
+document.addEventListener(
+    "mousemove",
+    function(event){
+
+        mouseX =
+            (event.clientX /
+            window.innerWidth - 0.5) * 2;
+
+        mouseY =
+            (event.clientY /
+            window.innerHeight - 0.5) * 2;
+
+    }
+);
+
+
+/* Mobile gyroscope movement */
+
+if(
+    window.DeviceOrientationEvent
+){
+
+    window.addEventListener(
+        "deviceorientation",
+        function(event){
+
+            if(
+                event.gamma !== null &&
+                event.beta !== null
+            ){
+
+                mouseX =
+                    Math.max(
+                        -1,
+                        Math.min(
+                            1,
+                            event.gamma / 35
+                        )
+                    );
+
+                mouseY =
+                    Math.max(
+                        -1,
+                        Math.min(
+                            1,
+                            (event.beta - 45) / 35
+                        )
+                    );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* Smooth movement */
+
+function animate360(){
+
+    currentX +=
+        (mouseX - currentX) * 0.025;
+
+    currentY +=
+        (mouseY - currentY) * 0.025;
+
+
+    travel360.style.transform =
+        "translate3d(" +
+        (currentX * -12) +
+        "px," +
+        (currentY * -8) +
+        "px,0) scale(1.08)";
+
+
+    requestAnimationFrame(
+        animate360
+    );
+
+}
+
+animate360();
+
+
+/* =====================================
+   PAGE ENTRY ANIMATION
+===================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        const hero =
+            document.querySelector(".hero");
+
+        const aiCard =
+            document.querySelector(".ai-card");
+
+        const quickSection =
+            document.querySelector(".quick-section");
+
+
+        if(hero){
+
+            hero.style.opacity = "0";
+            hero.style.transform =
+                "translateY(20px)";
+
+            setTimeout(
+                function(){
+
+                    hero.style.transition =
+                        "opacity .8s ease, transform .8s ease";
+
+                    hero.style.opacity = "1";
+                    hero.style.transform =
+                        "translateY(0)";
+
+                },
+                150
+            );
+
+        }
+
+
+        if(aiCard){
+
+            aiCard.style.opacity = "0";
+            aiCard.style.transform =
+                "translateY(25px)";
+
+            setTimeout(
+                function(){
+
+                    aiCard.style.transition =
+                        "opacity .8s ease, transform .8s ease";
+
+                    aiCard.style.opacity = "1";
+                    aiCard.style.transform =
+                        "translateY(0)";
+
+                },
+                450
+            );
+
+        }
+
+
+        if(quickSection){
+
+            quickSection.style.opacity = "0";
+
+            setTimeout(
+                function(){
+
+                    quickSection.style.transition =
+                        "opacity .8s ease";
+
+                    quickSection.style.opacity =
+                        "1";
+
+                },
+                700
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   PREVENT ACCIDENTAL FORM SUBMIT
+===================================== */
+
+document.addEventListener(
+    "submit",
+    function(event){
+
+        event.preventDefault();
+
+    }
+);
+
+
+/* =====================================
+   FINAL CONSOLE MESSAGE
+===================================== */
+
+console.log(
+    "✈️ Kainthla Travel AI initialized."
 );
 
 </script>
 
-</body>
 
+</body>
 </html>

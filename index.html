@@ -922,64 +922,78 @@ function addMessage(text, type){
 
 function sendMessage(){
 
-    const text =
-        input.value.trim();
+  const text = input.value.trim();
 
-    if(!text) return;
+  if(!text) return;
 
-    addMessage(text, "user");
+  addMessage(text, "user");
 
-    input.value = "";
+  input.value = "";
+
+  const typing = document.createElement("div");
+
+  typing.className = "message ai";
+
+  typing.innerHTML = `
+    <div class="bubble">
+      Thinking<span class="dots">...</span>
+    </div>
+  `;
+
+  messages.appendChild(typing);
+
+  messages.scrollTop = messages.scrollHeight;
+
+  fetch(
+    TRAVEL_AI_API +
+    "?message=" +
+    encodeURIComponent(text)
+  )
+
+  .then(function(response){
+
+    if(!response.ok){
+      throw new Error("API request failed");
+    }
+
+    return response.json();
+
+  })
+
+  .then(function(data){
+
+    typing.remove();
+
+    if(data.success){
+
+      addMessage(
+        data.message,
+        "ai"
+      );
+
+    }else{
+
+      addMessage(
+        data.error || "Sorry, AI response nahi aa paya.",
+        "ai"
+      );
+
+    }
+
+  })
+
+  .catch(function(error){
+
+    typing.remove();
 
     addMessage(
-        "Thinking...",
-        "ai"
+      "Connection error. Please try again.",
+      "ai"
     );
 
-    fetch(
-        TRAVEL_AI_API +
-        "?message=" +
-        encodeURIComponent(text)
-    )
-    .then(function(response){
+    console.error(error);
 
-        return response.json();
-
-    })
-    .then(function(data){
-
-        messages.lastElementChild.remove();
-
-        if(data.success){
-
-            addMessage(
-                data.message,
-                "ai"
-            );
-
-        }else{
-
-            addMessage(
-                "Sorry, AI response nahi aa paaya.",
-                "ai"
-            );
-
-            console.log(data.error);
-        }
-
-    })
-    .catch(function(error){
-
-        messages.lastElementChild.remove();
-
-        addMessage(
-            "Connection error. Please try again.",
-            "ai"
-        );
-
-        console.error(error);
-
-    });
+  });
 
 }
 

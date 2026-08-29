@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kainthla Travel AI | Shrikhand Mahadev</title>
+<title>Kainthla Travel AI | Explore the World</title>
 
 <style>
 *{
@@ -13,17 +13,16 @@
     padding:0;
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
     background:#050708;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 /* =========================
-   360° VIEW
+   360 VIEW
 ========================= */
 
 #viewer{
@@ -70,7 +69,6 @@ body{
     content:"";
     position:absolute;
     inset:0;
-
     pointer-events:none;
 
     background:
@@ -79,7 +77,7 @@ body{
             rgba(0,0,0,.48),
             transparent 25%,
             transparent 65%,
-            rgba(0,0,0,.58)
+            rgba(0,0,0,.60)
         );
 }
 
@@ -90,41 +88,33 @@ body{
 
 .nav{
     position:fixed;
-
     top:0;
     left:0;
 
     width:100%;
-
-    padding:25px 30px;
+    padding:24px 30px;
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
-    z-index:10;
-
+    z-index:20;
     color:white;
 }
 
 .logo{
     font-size:15px;
     font-weight:700;
-
     letter-spacing:3px;
 }
 
 .logo span{
     display:block;
-
     margin-top:4px;
 
     font-size:9px;
-
     letter-spacing:2px;
-
     opacity:.65;
-
     font-weight:400;
 }
 
@@ -134,21 +124,20 @@ body{
 }
 
 .nav-btn{
-    border:1px solid rgba(255,255,255,.3);
+    border:1px solid rgba(255,255,255,.28);
 
-    background:rgba(0,0,0,.18);
-
-    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,.22);
+    backdrop-filter:blur(12px);
 
     color:white;
 
     padding:10px 17px;
-
     border-radius:30px;
 
-    font-size:11px;
-
+    font-size:10px;
     letter-spacing:1px;
+
+    cursor:pointer;
 }
 
 
@@ -158,42 +147,42 @@ body{
 
 .hero{
     position:fixed;
-
     z-index:5;
 
     left:50%;
     top:50%;
 
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     text-align:center;
-
     color:white;
 
     width:90%;
-
     pointer-events:none;
+
+    transition:.5s ease;
+}
+
+.hero.hide{
+    opacity:.08;
+    transform:
+        translate(-50%,-50%)
+        scale(.96);
 }
 
 .location{
     font-size:10px;
-
     letter-spacing:5px;
-
     text-transform:uppercase;
 
     opacity:.8;
-
     margin-bottom:18px;
 }
 
 .hero h1{
-    font-size:
-        clamp(42px,9vw,100px);
+    font-size:clamp(42px,9vw,100px);
 
     line-height:.9;
-
     letter-spacing:-3px;
 
     font-weight:700;
@@ -218,7 +207,6 @@ body{
     margin-top:28px;
 
     font-size:12px;
-
     letter-spacing:2px;
 
     opacity:.8;
@@ -226,43 +214,41 @@ body{
 
 
 /* =========================
-   DRAG INDICATOR
+   DRAG
 ========================= */
 
 .drag{
     position:fixed;
-
     z-index:8;
 
     bottom:34px;
-
     left:50%;
 
-    transform:
-        translateX(-50%);
+    transform:translateX(-50%);
 
     color:white;
-
     text-align:center;
 
     pointer-events:none;
+
+    transition:.4s ease;
+}
+
+.drag.hide{
+    opacity:0;
 }
 
 .drag-line{
     width:100px;
-
     height:1px;
 
-    margin:
-        0 auto 12px;
+    margin:0 auto 12px;
 
-    background:
-        rgba(255,255,255,.65);
+    background:rgba(255,255,255,.65);
 }
 
 .drag p{
     font-size:9px;
-
     letter-spacing:3px;
 
     text-transform:uppercase;
@@ -272,7 +258,7 @@ body{
 
 
 /* =========================
-   SIDE INFO
+   INFO
 ========================= */
 
 .info{
@@ -284,7 +270,6 @@ body{
     z-index:8;
 
     color:white;
-
     text-align:right;
 }
 
@@ -292,7 +277,6 @@ body{
     display:block;
 
     font-size:8px;
-
     letter-spacing:2px;
 
     opacity:.55;
@@ -302,13 +286,399 @@ body{
 
 .info strong{
     font-size:12px;
-
     letter-spacing:1px;
 }
 
 
 /* =========================
-   LOADING SCREEN
+   AI BUTTON
+========================= */
+
+.ai-launch{
+    position:fixed;
+
+    right:28px;
+    bottom:82px;
+
+    z-index:50;
+
+    border:1px solid rgba(255,255,255,.35);
+
+    background:
+        rgba(5,7,8,.45);
+
+    backdrop-filter:blur(18px);
+
+    color:white;
+
+    padding:13px 20px;
+
+    border-radius:40px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.3);
+
+    transition:.3s ease;
+}
+
+.ai-launch:hover{
+    transform:translateY(-3px);
+}
+
+.ai-icon{
+    width:27px;
+    height:27px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(255,255,255,.14);
+
+    font-size:13px;
+}
+
+.ai-launch-text{
+    text-align:left;
+}
+
+.ai-launch-text strong{
+    display:block;
+
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.ai-launch-text span{
+    display:block;
+
+    margin-top:2px;
+
+    font-size:8px;
+    opacity:.6;
+}
+
+
+/* =========================
+   AI CHAT PANEL
+========================= */
+
+.chat-overlay{
+    position:fixed;
+    inset:0;
+
+    z-index:100;
+
+    background:rgba(0,0,0,.42);
+
+    backdrop-filter:blur(5px);
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.35s ease;
+}
+
+.chat-overlay.open{
+    opacity:1;
+    pointer-events:auto;
+}
+
+
+.chat{
+    position:absolute;
+
+    right:20px;
+    bottom:20px;
+
+    width:min(430px,calc(100% - 40px));
+
+    height:min(650px,calc(100% - 40px));
+
+    background:
+        rgba(9,12,14,.88);
+
+    border:
+        1px solid rgba(255,255,255,.14);
+
+    backdrop-filter:blur(25px);
+
+    border-radius:26px;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.55);
+
+    overflow:hidden;
+
+    transform:
+        translateY(25px)
+        scale(.97);
+
+    transition:.35s ease;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.chat-overlay.open .chat{
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =========================
+   CHAT HEADER
+========================= */
+
+.chat-header{
+    padding:19px 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    color:white;
+}
+
+.ai-brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.ai-avatar{
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.22),
+            rgba(255,255,255,.06)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    font-size:16px;
+}
+
+.ai-name{
+    font-size:13px;
+    font-weight:600;
+
+    letter-spacing:1px;
+}
+
+.ai-status{
+    font-size:8px;
+    margin-top:4px;
+
+    color:rgba(255,255,255,.55);
+}
+
+.close-chat{
+    width:34px;
+    height:34px;
+
+    border:0;
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   CHAT MESSAGES
+========================= */
+
+.messages{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:20px;
+
+    color:white;
+
+    scrollbar-width:none;
+}
+
+.messages::-webkit-scrollbar{
+    display:none;
+}
+
+.message{
+    display:flex;
+
+    margin-bottom:14px;
+}
+
+.message.ai{
+    justify-content:flex-start;
+}
+
+.message.user{
+    justify-content:flex-end;
+}
+
+.bubble{
+    max-width:82%;
+
+    padding:12px 14px;
+
+    border-radius:17px;
+
+    font-size:12px;
+
+    line-height:1.55;
+}
+
+.message.ai .bubble{
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-top-left-radius:5px;
+}
+
+.message.user .bubble{
+    background:
+        rgba(255,255,255,.16);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-top-right-radius:5px;
+}
+
+
+/* =========================
+   QUICK PROMPTS
+========================= */
+
+.quick{
+    padding:
+        0 18px 12px;
+
+    display:flex;
+
+    gap:7px;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+}
+
+.quick::-webkit-scrollbar{
+    display:none;
+}
+
+.quick button{
+    flex-shrink:0;
+
+    padding:8px 12px;
+
+    border-radius:20px;
+
+    border:
+        1px solid rgba(255,255,255,.13);
+
+    background:
+        rgba(255,255,255,.05);
+
+    color:white;
+
+    font-size:9px;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   CHAT INPUT
+========================= */
+
+.chat-input{
+    padding:12px;
+
+    border-top:
+        1px solid rgba(255,255,255,.08);
+
+    display:flex;
+
+    gap:8px;
+}
+
+.chat-input input{
+    flex:1;
+
+    min-width:0;
+
+    border:0;
+    outline:none;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    padding:13px 15px;
+
+    border-radius:25px;
+
+    font-size:12px;
+}
+
+.chat-input input::placeholder{
+    color:rgba(255,255,255,.42);
+}
+
+.send{
+    width:44px;
+    height:44px;
+
+    border:0;
+    border-radius:50%;
+
+    background:white;
+
+    color:#111;
+
+    cursor:pointer;
+
+    font-size:16px;
+}
+
+
+/* =========================
+   LOADING
 ========================= */
 
 #loading{
@@ -316,12 +686,11 @@ body{
 
     inset:0;
 
-    z-index:30;
+    z-index:200;
 
     display:flex;
 
     justify-content:center;
-
     align-items:center;
 
     background:#050708;
@@ -332,8 +701,7 @@ body{
 
     letter-spacing:4px;
 
-    transition:
-        opacity .8s ease;
+    transition:opacity .8s ease;
 }
 
 #loading.hide{
@@ -359,7 +727,6 @@ body{
 
     .nav-btn{
         padding:8px 12px;
-
         font-size:9px;
     }
 
@@ -376,7 +743,27 @@ body{
     }
 
     .drag{
-        bottom:25px;
+        bottom:24px;
+    }
+
+    .ai-launch{
+        right:18px;
+        bottom:62px;
+
+        padding:11px 15px;
+    }
+
+    .chat{
+        right:10px;
+        bottom:10px;
+
+        width:
+            calc(100% - 20px);
+
+        height:
+            calc(100% - 20px);
+
+        border-radius:22px;
     }
 }
 </style>
@@ -396,7 +783,7 @@ body{
 
 
 <!-- =========================
-     360 VIEW
+     360 BACKGROUND
 ========================= -->
 
 <div id="viewer">
@@ -407,7 +794,7 @@ body{
 
 
 <!-- =========================
-     NAVIGATION
+     NAVBAR
 ========================= -->
 
 <div class="nav">
@@ -429,8 +816,11 @@ body{
             EXPLORE
         </div>
 
-        <div class="nav-btn">
-            360°
+        <div
+            class="nav-btn"
+            onclick="openChat()"
+        >
+            AI CHAT
         </div>
 
     </div>
@@ -439,10 +829,10 @@ body{
 
 
 <!-- =========================
-     HERO CONTENT
+     HERO
 ========================= -->
 
-<div class="hero">
+<div class="hero" id="hero">
 
     <div class="location">
         HIMACHAL PRADESH · INDIA
@@ -471,7 +861,7 @@ body{
      DRAG INDICATOR
 ========================= -->
 
-<div class="drag">
+<div class="drag" id="drag">
 
     <div class="drag-line"></div>
 
@@ -499,6 +889,157 @@ body{
 </div>
 
 
+<!-- =========================
+     AI LAUNCH BUTTON
+========================= -->
+
+<button
+    class="ai-launch"
+    onclick="openChat()"
+>
+
+    <div class="ai-icon">
+        ✦
+    </div>
+
+    <div class="ai-launch-text">
+
+        <strong>
+            KAINTHLA TRAVEL AI
+        </strong>
+
+        <span>
+            ASK YOUR TRAVEL QUESTION
+        </span>
+
+    </div>
+
+</button>
+
+
+<!-- =========================
+     CHAT
+========================= -->
+
+<div
+    class="chat-overlay"
+    id="chatOverlay"
+    onclick="outsideClose(event)"
+>
+
+    <div class="chat">
+
+        <!-- HEADER -->
+
+        <div class="chat-header">
+
+            <div class="ai-brand">
+
+                <div class="ai-avatar">
+                    ✦
+                </div>
+
+                <div>
+
+                    <div class="ai-name">
+                        KAINTHLA TRAVEL AI
+                    </div>
+
+                    <div class="ai-status">
+                        Your intelligent travel companion
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="close-chat"
+                onclick="closeChat()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- MESSAGES -->
+
+        <div
+            class="messages"
+            id="messages"
+        >
+
+            <div class="message ai">
+
+                <div class="bubble">
+
+                    Namaste 👋<br><br>
+
+                    I'm <b>Kainthla Travel AI</b>.
+                    Ask me anything about destinations,
+                    trips, routes, stays, budgets or travel ideas.
+
+                    <br><br>
+
+                    Where would you like to go?
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK OPTIONS -->
+
+        <div class="quick">
+
+            <button onclick="quickAsk('Best places in Himachal')">
+                🏔 Himachal
+            </button>
+
+            <button onclick="quickAsk('Plan a 3 day trip')">
+                🗺 Trip Plan
+            </button>
+
+            <button onclick="quickAsk('Best places for a budget trip')">
+                💰 Budget
+            </button>
+
+            <button onclick="quickAsk('Best time to travel')">
+                🌤 Best Time
+            </button>
+
+        </div>
+
+
+        <!-- INPUT -->
+
+        <div class="chat-input">
+
+            <input
+                id="userInput"
+                type="text"
+                placeholder="Ask anything about travel..."
+                autocomplete="off"
+            >
+
+            <button
+                class="send"
+                onclick="sendMessage()"
+            >
+                ↑
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
 
 /* =========================
@@ -514,9 +1055,24 @@ const panorama =
 const loading =
     document.getElementById("loading");
 
+const hero =
+    document.getElementById("hero");
+
+const drag =
+    document.getElementById("drag");
+
+const chatOverlay =
+    document.getElementById("chatOverlay");
+
+const messages =
+    document.getElementById("messages");
+
+const userInput =
+    document.getElementById("userInput");
+
 
 /* =========================
-   VARIABLES
+   PANORAMA VARIABLES
 ========================= */
 
 let dragging = false;
@@ -533,14 +1089,10 @@ const sensitivity = 0.10;
 
 
 /* =========================
-   IMAGE LOAD
+   LOAD IMAGE
 ========================= */
 
 const img = new Image();
-
-/*
-   YOUR 360 IMAGE
-*/
 
 img.src =
 "1aebea2f-ed66-4843-80ef-f381f65cfe50.webp";
@@ -566,7 +1118,7 @@ img.onerror = function(){
 
 
 /* =========================
-   UPDATE VIEW
+   UPDATE PANORAMA
 ========================= */
 
 function updateView(){
@@ -592,9 +1144,11 @@ viewer.addEventListener(
             "dragging"
         );
 
-        lastX = e.clientX;
+        lastX =
+            e.clientX;
 
-        lastY = e.clientY;
+        lastY =
+            e.clientY;
 
         velocityX = 0;
 
@@ -612,7 +1166,6 @@ window.addEventListener(
 
         if(!dragging) return;
 
-
         const dx =
             e.clientX - lastX;
 
@@ -623,14 +1176,9 @@ window.addEventListener(
         offsetX -=
             dx * sensitivity;
 
-
         offsetY -=
             dy * sensitivity;
 
-
-        /*
-           Prevent excessive vertical movement
-        */
 
         offsetY =
             Math.max(
@@ -686,14 +1234,11 @@ viewer.addEventListener(
 
         dragging = true;
 
-
         lastX =
             e.touches[0].clientX;
 
-
         lastY =
             e.touches[0].clientY;
-
 
         velocityX = 0;
 
@@ -714,10 +1259,8 @@ viewer.addEventListener(
 
         if(!dragging) return;
 
-
         const x =
             e.touches[0].clientX;
-
 
         const y =
             e.touches[0].clientY;
@@ -726,14 +1269,12 @@ viewer.addEventListener(
         const dx =
             x - lastX;
 
-
         const dy =
             y - lastY;
 
 
         offsetX -=
             dx * sensitivity;
-
 
         offsetY -=
             dy * sensitivity;
@@ -753,7 +1294,6 @@ viewer.addEventListener(
 
 
         lastX = x;
-
         lastY = y;
 
 
@@ -788,20 +1328,17 @@ function inertia(){
 
     if(
         !dragging &&
-        Math.abs(velocityX) > 0.1
+        Math.abs(velocityX) > .1
     ){
 
         offsetX -=
-            velocityX * 0.04;
+            velocityX * .04;
 
-
-        velocityX *= 0.94;
-
+        velocityX *= .94;
 
         updateView();
 
     }
-
 
     requestAnimationFrame(
         inertia
@@ -811,12 +1348,312 @@ function inertia(){
 
 
 /* =========================
-   START
+   OPEN CHAT
 ========================= */
 
-inertia();
+function openChat(){
 
-updateView();
+    chatOverlay.classList.add(
+        "open"
+    );
+
+    hero.classList.add(
+        "hide"
+    );
+
+    drag.classList.add(
+        "hide"
+    );
+
+    setTimeout(function(){
+
+        userInput.focus();
+
+    },350);
+
+}
+
+
+/* =========================
+   CLOSE CHAT
+========================= */
+
+function closeChat(){
+
+    chatOverlay.classList.remove(
+        "open"
+    );
+
+    hero.classList.remove(
+        "hide"
+    );
+
+    drag.classList.remove(
+        "hide"
+    );
+
+}
+
+
+/* =========================
+   OUTSIDE CLOSE
+========================= */
+
+function outsideClose(e){
+
+    if(
+        e.target === chatOverlay
+    ){
+
+        closeChat();
+
+    }
+
+}
+
+
+/* =========================
+   ADD MESSAGE
+========================= */
+
+function addMessage(
+    text,
+    type
+){
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+
+    bubble.innerHTML =
+        text;
+
+
+    message.appendChild(
+        bubble
+    );
+
+
+    messages.appendChild(
+        message
+    );
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* =========================
+   DEMO AI RESPONSE
+========================= */
+
+function getDemoResponse(text){
+
+    const q =
+        text.toLowerCase();
+
+
+    if(
+        q.includes("shrikhand")
+    ){
+
+        return `
+        Shrikhand Mahadev is a beautiful
+        Himalayan destination in Himachal Pradesh.
+        Shrikhand Mahadev is known for its dramatic
+    Himalayan landscape and high-altitude trekking.
+    `
+    ;
+}
+
+if(q.includes("himachal")){
+    return `
+Himachal Pradesh is a beautiful Himalayan state
+known for mountains, valleys, rivers, temples,
+trekking routes and peaceful villages.
+
+I can help you discover destinations,
+routes, places to visit and travel ideas.
+`;
+}
+
+if(q.includes("travel")){
+    return `
+Absolutely! 🌄
+
+Tell me a destination, place or experience
+you are interested in.
+
+For example:
+• Best places to visit
+• Things to do
+• Trekking
+• Weather
+• Nearby destinations
+• Travel route
+`;
+}
+
+if(q.includes("trek")){
+    return `
+I can help you explore Himalayan trekking
+destinations.
+
+Try asking:
+"Best trek near Shimla"
+"Shrikhand trek"
+"Easy Himalayan trek"
+`;
+}
+
+if(
+    q.includes("hello") ||
+    q.includes("hi") ||
+    q.includes("hey")
+){
+    return `
+Hello 👋
+
+I'm Kainthla Travel AI.
+
+I can help you discover places,
+plan journeys and explore destinations
+through immersive 360° experiences.
+
+Where do you want to go? 🌍
+`;
+}
+
+return `
+I'm Kainthla Travel AI 🌐
+
+I can help you with travel destinations,
+places to explore, trekking, routes and
+destination information.
+
+Try asking:
+"Tell me about Shrikhand"
+""Best places in Himachal"
+"Suggest a trek"
+`;
+}
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+function sendMessage(){
+
+    const input =
+        document.getElementById("chatInput");
+
+    const text =
+        input.value.trim();
+
+    if(!text) return;
+
+    addMessage(text, "user");
+
+    input.value = "";
+
+    const typing =
+        document.createElement("div");
+
+    typing.className = "message ai";
+
+    typing.innerHTML = `
+        <div class="bubble">
+            Thinking<span class="dots">...</span>
+        </div>
+    `;
+
+    messages.appendChild(typing);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+    setTimeout(function(){
+
+        typing.remove();
+
+        const response =
+            getDemoResponse(text);
+
+        addMessage(
+            response,
+            "ai"
+        );
+
+    },700);
+}
+
+
+/* =========================
+   ENTER TO SEND
+========================= */
+
+document
+.getElementById("chatInput")
+.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+
+            e.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   SEND BUTTON
+========================= */
+
+document
+.getElementById("sendBtn")
+.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* =========================
+   WELCOME MESSAGE
+========================= */
+
+setTimeout(function(){
+
+    addMessage(
+        `
+Welcome to Kainthla Travel AI 🌐
+I'm your travel companion.
+
+Ask me about Shrikhand,
+Himachal Pradesh or any
+destination you want to explore.
+        `,
+        "ai"
+    );
+
+},900);
 
 </script>
 

@@ -814,7 +814,7 @@ body{
 
 
 </main>
-      <script>
+<script>
 
 /* =========================================
    KAINTHLA TRAVEL AI
@@ -2206,12 +2206,19 @@ async function getAnswer(){
             encodeURIComponent(question);
 
 
+        console.log(
+            "Travel AI Request:",
+            requestURL
+        );
+
+
         const response =
             await fetch(
                 requestURL,
                 {
                     method:"GET",
-                    redirect:"follow"
+                    redirect:"follow",
+                    cache:"no-store"
                 }
             );
 
@@ -2275,6 +2282,30 @@ async function getAnswer(){
         }
 
 
+        console.log(
+            "Travel AI Response:",
+            data
+        );
+
+
+        /* =================================
+           CHECK BACKEND ERROR
+        ================================= */
+
+        if(
+            data &&
+            typeof data === "object" &&
+            data.success === false
+        ){
+
+            throw new Error(
+                data.error ||
+                "Google Apps Script returned an error."
+            );
+
+        }
+
+
         /* =================================
            FIND AI ANSWER
         ================================= */
@@ -2307,7 +2338,9 @@ async function getAnswer(){
         }
 
 
-        /* EMPTY RESPONSE */
+        /* =================================
+           EMPTY RESPONSE
+        ================================= */
 
         if(
             !result ||
@@ -2315,7 +2348,7 @@ async function getAnswer(){
         ){
 
             throw new Error(
-                "Empty AI response"
+                "Empty AI response from Google Apps Script."
             );
 
         }
@@ -2359,7 +2392,7 @@ async function getAnswer(){
 
 
         showError(
-            "Travel AI is temporarily unavailable. Please check your internet connection and try again."
+            "Travel AI is temporarily unavailable. Please try again."
         );
 
     }

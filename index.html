@@ -9,21 +9,20 @@
       content="width=device-width, initial-scale=1.0">
 
 <meta name="theme-color"
-      content="#030812">
+      content="#030712">
 
 <title>Kainthla Travel AI</title>
 
-
 <style>
 
-/* =====================================
+/* ==============================
    RESET
-===================================== */
+============================== */
 
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 html{
@@ -31,9 +30,7 @@ html{
 }
 
 body{
-
     min-height:100vh;
-
     overflow-x:hidden;
 
     font-family:
@@ -44,85 +41,63 @@ body{
     "Segoe UI",
     sans-serif;
 
-    color:#ffffff;
-
-    background:#030812;
+    color:#fff;
+    background:#030712;
 }
 
 
-/* =====================================
+/* ==============================
    APP
-===================================== */
+============================== */
 
 .app{
-
     position:relative;
-
-    width:100%;
-
     min-height:100vh;
-
     overflow:hidden;
 }
 
 
-/* =====================================
-   PANORAMA BACKGROUND
-===================================== */
+/* ==============================
+   FIXED BACKGROUND
+============================== */
 
 #panorama{
-
     position:fixed;
-
     inset:0;
 
     width:100%;
     height:100%;
 
     z-index:-10;
-
     overflow:hidden;
 
-    background:#030812;
+    background:#030712;
 }
 
 
-/* BACKGROUND IMAGE */
+/* background image */
 
 #panorama-image{
-
     position:absolute;
-
-    top:0;
-    left:0;
+    inset:0;
 
     width:100%;
     height:100%;
 
     object-fit:cover;
-
     object-position:center;
 
-    user-select:none;
+    transform:scale(1.08);
 
     pointer-events:none;
-
-    transform:
-    scale(1.08);
-
-    will-change:
-    transform;
+    user-select:none;
 }
 
 
-/* =====================================
-   DARK CINEMATIC OVERLAY
-===================================== */
+/* dark cinematic layer */
 
 #panorama-overlay{
-
     position:absolute;
-
     inset:0;
 
     z-index:2;
@@ -130,25 +105,20 @@ body{
     pointer-events:none;
 
     background:
-
     linear-gradient(
         180deg,
-        rgba(2,7,18,.28) 0%,
-        rgba(2,7,18,.42) 38%,
-        rgba(1,4,11,.72) 72%,
-        rgba(1,3,8,.94) 100%
+        rgba(2,8,20,.25),
+        rgba(2,8,20,.48) 42%,
+        rgba(1,4,12,.82) 78%,
+        rgba(1,3,9,.97)
     );
 }
 
 
-/* =====================================
-   BLUE ATMOSPHERE
-===================================== */
+/* blue atmospheric glow */
 
 #panorama-glow{
-
     position:absolute;
-
     inset:0;
 
     z-index:3;
@@ -156,65 +126,53 @@ body{
     pointer-events:none;
 
     background:
-
     radial-gradient(
         circle at 50% 30%,
-        rgba(25,155,235,.16),
+        rgba(20,160,255,.20),
         transparent 42%
     ),
 
     radial-gradient(
         circle at 50% 100%,
-        rgba(0,0,0,.48),
-        transparent 58%
+        rgba(0,0,0,.55),
+        transparent 60%
     );
 }
 
 
-/* =====================================
+/* ==============================
    NAVBAR
-===================================== */
+============================== */
 
 .navbar{
-
     position:relative;
-
-    z-index:10;
+    z-index:20;
 
     width:100%;
 
-    padding:
-    18px 17px;
+    padding:18px 17px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 }
 
 
-/* =====================================
+/* ==============================
    BRAND
-===================================== */
+============================== */
 
 .brand{
-
     display:flex;
-
     align-items:center;
-
     gap:10px;
 }
 
-
 .brand-icon{
-
-    width:42px;
-    height:42px;
+    width:43px;
+    height:43px;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
@@ -224,39 +182,27 @@ body{
     rgba(255,255,255,.09);
 
     border:
-    1px solid
-    rgba(255,255,255,.15);
+    1px solid rgba(255,255,255,.15);
 
-    backdrop-filter:
-    blur(18px);
-
-    -webkit-backdrop-filter:
-    blur(18px);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
 
     box-shadow:
-    0 8px 30px
-    rgba(0,0,0,.25);
+    0 10px 30px rgba(0,0,0,.25);
 
     font-size:20px;
 }
 
-
 .brand-name{
-
     font-size:15px;
-
-    line-height:1;
-
     font-weight:800;
+    line-height:1;
 }
 
-
 .brand-sub{
-
-    margin-top:4px;
+    margin-top:5px;
 
     font-size:8px;
-
     letter-spacing:2px;
 
     color:
@@ -264,20 +210,16 @@ body{
 }
 
 
-/* =====================================
-   ONLINE STATUS
-===================================== */
+/* ==============================
+   AI STATUS
+============================== */
 
 .status{
-
     display:flex;
-
     align-items:center;
-
     gap:7px;
 
-    padding:
-    9px 12px;
+    padding:9px 12px;
 
     border-radius:30px;
 
@@ -285,14 +227,10 @@ body{
     rgba(255,255,255,.07);
 
     border:
-    1px solid
-    rgba(255,255,255,.12);
+    1px solid rgba(255,255,255,.12);
 
-    backdrop-filter:
-    blur(18px);
-
-    -webkit-backdrop-filter:
-    blur(18px);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
 
     font-size:10px;
 
@@ -300,9 +238,7 @@ body{
     rgba(255,255,255,.75);
 }
 
-
 .status-dot{
-
     width:7px;
     height:7px;
 
@@ -311,207 +247,213 @@ body{
     background:#55e59a;
 
     box-shadow:
-    0 0 12px
-    rgba(85,229,154,.9);
+    0 0 12px rgba(85,229,154,.9);
 }
 
 
-/* =====================================
+/* ==============================
    HERO
-===================================== */
+============================== */
 
 .hero{
-
     position:relative;
-
     z-index:5;
 
     width:100%;
 
-    min-height:
-    calc(100vh - 78px);
-
     padding:
-    34px 17px 45px;
+    28px 17px 35px;
 
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
 
     text-align:center;
 }
 
 
-/* =====================================
-   360° VIEWER
-===================================== */
+/* ==============================
+   PANORAMA VIEWER
+============================== */
 
 .viewer{
-
     position:relative;
 
-    width:
-    min(78vw,330px);
-
-    height:
-    min(78vw,330px);
+    width:min(78vw,340px);
+    height:min(78vw,340px);
 
     margin:
-    12px 0 30px;
+    12px 0 28px;
 
     overflow:hidden;
 
     border-radius:50%;
 
     background:
-    rgba(0,0,0,.20);
+    rgba(5,15,27,.45);
 
     border:
-    1px solid
-    rgba(255,255,255,.20);
+    1px solid rgba(255,255,255,.20);
 
     box-shadow:
 
     0 30px 90px
-    rgba(0,0,0,.55),
+    rgba(0,0,0,.58),
 
-    0 0 65px
-    rgba(20,155,235,.14);
+    0 0 70px
+    rgba(20,160,255,.16),
+
+    inset 0 0 40px
+    rgba(255,255,255,.04);
 
     cursor:grab;
 
     touch-action:pan-y;
 
     user-select:none;
-
-    -webkit-user-select:none;
 }
 
-
-.viewer:active{
-
+.viewer.dragging{
     cursor:grabbing;
 }
 
 
-/* =====================================
-   PANORAMA INSIDE CIRCLE
-===================================== */
+/* ==============================
+   PANORAMA TRACK
+============================== */
 
-.viewer-image{
-
+.panorama-track{
     position:absolute;
 
     top:0;
     left:0;
 
-    width:auto;
+    height:100%;
 
+    display:flex;
+
+    will-change:transform;
+
+    pointer-events:none;
+}
+
+
+/* both panorama copies */
+
+.panorama-copy{
+    display:block;
+
+    width:auto;
     height:100%;
 
     max-width:none;
+
+    flex-shrink:0;
+
+    object-fit:cover;
 
     user-select:none;
 
     -webkit-user-drag:none;
 
     pointer-events:none;
-
-    will-change:
-    transform;
 }
 
 
-/* =====================================
-   VIEWER OUTER RING
-===================================== */
-
-.viewer-ring{
-
-    position:absolute;
-
-    inset:-9px;
-
-    z-index:5;
-
-    border-radius:50%;
-
-    border:
-    1px solid
-    rgba(255,255,255,.18);
-
-    box-shadow:
-    0 0 35px
-    rgba(30,170,255,.14);
-
-    pointer-events:none;
-}
-
-
-/* =====================================
-   VIEWER INNER SHADOW
-===================================== */
+/* ==============================
+   VIEWER SHADE
+============================== */
 
 .viewer-shade{
-
     position:absolute;
-
     inset:0;
 
-    z-index:4;
+    z-index:5;
 
     border-radius:50%;
 
     pointer-events:none;
 
     background:
-
     radial-gradient(
         circle at center,
-        transparent 48%,
-        rgba(0,0,0,.25) 100%
+        transparent 42%,
+        rgba(0,0,0,.08) 65%,
+        rgba(0,0,0,.48) 100%
     );
 }
 
 
-/* =====================================
-   SWIPE HINT
-===================================== */
+/* ==============================
+   VIEWER RING
+============================== */
 
-.swipe-hint{
-
+.viewer-ring{
     position:absolute;
+
+    inset:0;
 
     z-index:8;
 
-    left:50%;
+    border-radius:50%;
 
+    border:
+    1px solid rgba(255,255,255,.22);
+
+    pointer-events:none;
+
+    box-shadow:
+    inset 0 0 25px
+    rgba(255,255,255,.06);
+}
+
+
+/* outer ring */
+
+.viewer::after{
+    content:"";
+
+    position:absolute;
+
+    inset:-9px;
+
+    border-radius:50%;
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    pointer-events:none;
+}
+
+
+/* ==============================
+   SWIPE HINT
+============================== */
+
+.swipe-hint{
+    position:absolute;
+
+    z-index:10;
+
+    left:50%;
     bottom:15px;
 
-    transform:
-    translateX(-50%);
+    transform:translateX(-50%);
 
-    padding:
-    7px 11px;
+    padding:7px 11px;
 
     border-radius:30px;
 
     white-space:nowrap;
 
     background:
-    rgba(0,0,0,.40);
+    rgba(0,0,0,.42);
 
     border:
-    1px solid
-    rgba(255,255,255,.12);
+    1px solid rgba(255,255,255,.12);
 
-    backdrop-filter:
-    blur(12px);
-
-    -webkit-backdrop-filter:
-    blur(12px);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
 
     font-size:8px;
 
@@ -520,19 +462,16 @@ body{
     color:
     rgba(255,255,255,.72);
 
-    pointer-events:none;
-
     transition:
     opacity .5s ease;
 }
 
 
-/* =====================================
-   HERO KICKER
-===================================== */
+/* ==============================
+   HERO TEXT
+============================== */
 
 .hero-kicker{
-
     margin-bottom:12px;
 
     font-size:10px;
@@ -546,44 +485,32 @@ body{
 }
 
 
-/* =====================================
-   HERO TITLE
-===================================== */
-
 .hero-title{
-
     font-size:
-    clamp(43px,12vw,76px);
+    clamp(44px,12vw,78px);
 
-    line-height:.94;
+    line-height:.93;
 
     font-weight:900;
 
     letter-spacing:-3px;
 
     background:
-
     linear-gradient(
         180deg,
-        #ffffff,
-        #b8c9dc
+        #fff,
+        #b7c8da
     );
 
     -webkit-background-clip:text;
-
     background-clip:text;
 
     color:transparent;
 }
 
 
-/* =====================================
-   HERO DESCRIPTION
-===================================== */
-
 .hero-description{
-
-    max-width:560px;
+    max-width:570px;
 
     margin-top:18px;
 
@@ -596,14 +523,12 @@ body{
 }
 
 
-/* =====================================
+/* ==============================
    GLASS
-===================================== */
+============================== */
 
 .glass{
-
     background:
-
     linear-gradient(
         135deg,
         rgba(255,255,255,.10),
@@ -611,12 +536,10 @@ body{
     );
 
     border:
-    1px solid
-    rgba(255,255,255,.13);
+    1px solid rgba(255,255,255,.13);
 
     box-shadow:
-    0 25px 80px
-    rgba(0,0,0,.30);
+    0 25px 80px rgba(0,0,0,.30);
 
     backdrop-filter:
     blur(24px)
@@ -628,54 +551,45 @@ body{
 }
 
 
-/* =====================================
+/* ==============================
    DESKTOP
-===================================== */
+============================== */
 
 @media(min-width:700px){
 
     .navbar{
-
-        padding:
-        24px 35px;
+        padding:24px 35px;
     }
 
     .hero{
-
-        padding-top:55px;
+        padding-top:45px;
     }
 
     .viewer{
-
-        width:360px;
-        height:360px;
+        width:380px;
+        height:380px;
     }
 
     .hero-description{
-
         font-size:15px;
     }
-
 }
 
 
-/* =====================================
-   SMALL PHONES
-===================================== */
+/* ==============================
+   SMALL MOBILE
+============================== */
 
 @media(max-width:360px){
 
     .viewer{
-
         width:76vw;
         height:76vw;
     }
 
     .hero-title{
-
         font-size:40px;
     }
-
 }
 
 </style>
@@ -685,10 +599,9 @@ body{
 
 <body>
 
-
-<!-- =====================================
-     PANORAMA BACKGROUND
-===================================== -->
+<!-- ==============================
+     BACKGROUND
+============================== -->
 
 <div id="panorama">
 
@@ -705,16 +618,12 @@ body{
 </div>
 
 
-<!-- =====================================
-     MAIN APP
-===================================== -->
-
 <div class="app">
 
 
-<!-- =====================================
+<!-- ==============================
      NAVBAR
-===================================== -->
+============================== -->
 
 <header class="navbar">
 
@@ -750,29 +659,40 @@ body{
 </header>
 
 
-<!-- =====================================
+<!-- ==============================
      HERO
-===================================== -->
+============================== -->
 
 <main class="hero">
 
 
-    <!-- =================================
-         CIRCULAR PANORAMA VIEWER
-    ================================== -->
+    <!-- PANORAMA -->
 
     <div
         class="viewer glass"
         id="viewer"
     >
 
-        <img
-            class="viewer-image"
-            id="viewerImage"
-            src="1aebea2f-ed66-4843-80ef-f381f65cfe50.webp"
-            alt="Kainthla Travel panorama"
-            draggable="false"
+        <div
+            class="panorama-track"
+            id="panoramaTrack"
         >
+
+            <img
+                class="panorama-copy"
+                src="1aebea2f-ed66-4843-80ef-f381f65cfe50.webp"
+                alt="Travel panorama"
+                draggable="false"
+            >
+
+            <img
+                class="panorama-copy"
+                src="1aebea2f-ed66-4843-80ef-f381f65cfe50.webp"
+                alt=""
+                draggable="false"
+            >
+
+        </div>
 
 
         <div class="viewer-shade"></div>
@@ -780,16 +700,17 @@ body{
         <div class="viewer-ring"></div>
 
 
-        <div class="swipe-hint">
+        <div
+            class="swipe-hint"
+            id="swipeHint"
+        >
             ← SWIPE TO EXPLORE →
         </div>
 
     </div>
 
 
-    <!-- =================================
-         HERO CONTENT
-    ================================== -->
+    <!-- TEXT -->
 
     <div class="hero-kicker">
         EXPLORE BEYOND
@@ -797,24 +718,21 @@ body{
 
 
     <h1 class="hero-title">
-
         Where will<br>
         you go?
-
     </h1>
 
 
     <p class="hero-description">
-
-        Explore destinations, discover hidden
-        places and let Kainthla Travel AI help
-        you plan your next journey.
-
+        Tell Kainthla Travel AI what kind of
+        journey you're looking for. Discover
+        destinations, experiences and hidden
+        places made for you.
     </p>
 
 
 </main>
-      <script>
+<script>
 
 /* =========================================
    KAINTHLA TRAVEL AI
@@ -1314,7 +1232,7 @@ console.log(
 }
 
 </style>
-      <!-- =================================
+<!-- =================================
      AI TRAVEL SECTION
 ================================= -->
 
@@ -2042,7 +1960,7 @@ console.log(
 }
 
 </style>
-      <script>
+<script>
 
 /* =========================================
    KAINTHLA TRAVEL AI
@@ -2162,8 +2080,6 @@ async function getAnswer(){
         questionInput.value.trim();
 
 
-    /* EMPTY QUESTION */
-
     if(!question){
 
         showError(
@@ -2176,8 +2092,6 @@ async function getAnswer(){
 
     }
 
-
-    /* START LOADING */
 
     hideError();
 
@@ -2196,27 +2110,10 @@ async function getAnswer(){
 
     try{
 
-        /* =================================
-           SEND QUESTION TO GOOGLE APPS SCRIPT
-           
-           IMPORTANT:
-           Apps Script uses:
-           e.parameter.message
-           
-           Therefore we MUST send:
-           ?message=
-        ================================= */
-
         const requestURL =
             API_URL +
             "?message=" +
             encodeURIComponent(question);
-
-
-        console.log(
-            "Travel AI Request:",
-            requestURL
-        );
 
 
         const response =
@@ -2230,8 +2127,6 @@ async function getAnswer(){
             );
 
 
-        /* HTTP ERROR */
-
         if(!response.ok){
 
             throw new Error(
@@ -2241,10 +2136,6 @@ async function getAnswer(){
 
         }
 
-
-        /* =================================
-           READ RESPONSE
-        ================================= */
 
         const contentType =
             response.headers.get(
@@ -2271,7 +2162,6 @@ async function getAnswer(){
             const text =
                 await response.text();
 
-
             try{
 
                 data =
@@ -2288,16 +2178,6 @@ async function getAnswer(){
 
         }
 
-
-        console.log(
-            "Travel AI Response:",
-            data
-        );
-
-
-        /* =================================
-           FIND AI ANSWER
-        ================================= */
 
         let result = "";
 
@@ -2327,25 +2207,17 @@ async function getAnswer(){
         }
 
 
-        /* =================================
-           EMPTY RESPONSE
-        ================================= */
-
         if(
             !result ||
             !String(result).trim()
         ){
 
             throw new Error(
-                "Empty AI response from Google Apps Script"
+                "Empty AI response"
             );
 
         }
 
-
-        /* =================================
-           DISPLAY ANSWER
-        ================================= */
 
         answerText.textContent =
             String(result).trim();
@@ -2353,8 +2225,6 @@ async function getAnswer(){
         answerBox.hidden =
             false;
 
-
-        /* SMOOTH SCROLL */
 
         setTimeout(
             function(){
@@ -2370,7 +2240,6 @@ async function getAnswer(){
 
 
     }
-
 
     catch(error){
 
@@ -2494,5 +2363,4 @@ console.log(
     "✈️ Kainthla Travel AI is ready."
 );
 
-      </script>
-      
+</script>

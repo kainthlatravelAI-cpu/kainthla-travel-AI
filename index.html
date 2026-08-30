@@ -1968,7 +1968,7 @@ console.log(
 ========================================= */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwxZhBDGOTa4TFN2XAg_ihpIuvVbjJPiDzGt3vpyfuOqZdUXHzOYZ-YoP1Pe7tJZk-ldg/exec";
+"https://script.google.com/macros/s/AKfycbwvbNW-Gy-C39sCrU416gkqlhNbqflN5CDxjCzAVl0WniA_efyi68ww5TRLuFZPlIwF/exec";
 
 
 /* =========================================
@@ -2080,6 +2080,8 @@ async function getAnswer(){
         questionInput.value.trim();
 
 
+    /* EMPTY QUESTION */
+
     if(!question){
 
         showError(
@@ -2092,6 +2094,8 @@ async function getAnswer(){
 
     }
 
+
+    /* START LOADING */
 
     hideError();
 
@@ -2110,9 +2114,13 @@ async function getAnswer(){
 
     try{
 
+        /* =================================
+           SEND QUESTION TO GOOGLE APPS SCRIPT
+        ================================= */
+
         const requestURL =
             API_URL +
-            "?message=" +
+            "?question=" +
             encodeURIComponent(question);
 
 
@@ -2121,11 +2129,12 @@ async function getAnswer(){
                 requestURL,
                 {
                     method:"GET",
-                    redirect:"follow",
-                    cache:"no-store"
+                    redirect:"follow"
                 }
             );
 
+
+        /* HTTP ERROR */
 
         if(!response.ok){
 
@@ -2136,6 +2145,10 @@ async function getAnswer(){
 
         }
 
+
+        /* =================================
+           READ RESPONSE
+        ================================= */
 
         const contentType =
             response.headers.get(
@@ -2162,6 +2175,7 @@ async function getAnswer(){
             const text =
                 await response.text();
 
+
             try{
 
                 data =
@@ -2178,6 +2192,10 @@ async function getAnswer(){
 
         }
 
+
+        /* =================================
+           FIND AI ANSWER
+        ================================= */
 
         let result = "";
 
@@ -2207,6 +2225,8 @@ async function getAnswer(){
         }
 
 
+        /* EMPTY RESPONSE */
+
         if(
             !result ||
             !String(result).trim()
@@ -2219,12 +2239,18 @@ async function getAnswer(){
         }
 
 
+        /* =================================
+           DISPLAY ANSWER
+        ================================= */
+
         answerText.textContent =
             String(result).trim();
 
         answerBox.hidden =
             false;
 
+
+        /* SMOOTH SCROLL */
 
         setTimeout(
             function(){
@@ -2241,6 +2267,7 @@ async function getAnswer(){
 
     }
 
+
     catch(error){
 
         console.error(
@@ -2250,7 +2277,7 @@ async function getAnswer(){
 
 
         showError(
-            "Travel AI is temporarily unavailable. Please try again."
+            "Travel AI is temporarily unavailable. Please check your internet connection and try again."
         );
 
     }
@@ -2364,3 +2391,145 @@ console.log(
 );
 
 </script>
+
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer class="footer">
+
+    <div class="footer-line"></div>
+
+    <p>
+        Crafted for curious travellers
+    </p>
+
+    <span>
+        KAINTHLA TRAVEL AI
+    </span>
+
+</footer>
+
+
+<style>
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer{
+
+    width:100%;
+
+    padding:
+    30px 20px 35px;
+
+    text-align:center;
+
+    color:
+    rgba(255,255,255,.32);
+
+}
+
+
+.footer-line{
+
+    width:50px;
+
+    height:1px;
+
+    margin:
+    0 auto 14px;
+
+    background:
+    rgba(255,255,255,.15);
+
+}
+
+
+.footer p{
+
+    font-size:9px;
+
+    margin-bottom:5px;
+
+}
+
+
+.footer span{
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    color:
+    rgba(255,255,255,.20);
+
+}
+
+
+/* =========================================
+   HIDDEN
+========================================= */
+
+[hidden]{
+
+    display:none !important;
+
+}
+
+
+/* =========================================
+   BUTTON / TEXTAREA
+========================================= */
+
+button,
+textarea{
+
+    -webkit-tap-highlight-color:
+    transparent;
+
+}
+
+
+/* =========================================
+   FINAL MOBILE
+========================================= */
+
+@media(max-width:480px){
+
+    .ai-section{
+
+        padding-top:5px;
+
+    }
+
+    .ai-card{
+
+        border-radius:24px;
+
+    }
+
+}
+
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+@media(min-width:700px){
+
+    .footer{
+
+        padding-bottom:45px;
+
+    }
+
+}
+
+</style>
+
+</div>
+</body>
+</html>

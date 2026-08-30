@@ -814,7 +814,7 @@ body{
 
 
 </main>
-<script>
+      <script>
 
 /* =========================================
    KAINTHLA TRAVEL AI
@@ -1314,7 +1314,7 @@ console.log(
 }
 
 </style>
-<!-- =================================
+      <!-- =================================
      AI TRAVEL SECTION
 ================================= -->
 
@@ -2041,7 +2041,7 @@ console.log(
 
 }
 
-      </style>
+</style>
       <script>
 
 /* =========================================
@@ -2196,15 +2196,27 @@ async function getAnswer(){
 
     try{
 
-        /*
-           Question Google Apps Script
-           ko send ki ja rahi hai.
-        */
+        /* =================================
+           SEND QUESTION TO GOOGLE APPS SCRIPT
+           
+           IMPORTANT:
+           Apps Script uses:
+           e.parameter.message
+           
+           Therefore we MUST send:
+           ?message=
+        ================================= */
 
         const requestURL =
             API_URL +
-            "?question=" +
+            "?message=" +
             encodeURIComponent(question);
+
+
+        console.log(
+            "Travel AI Request:",
+            requestURL
+        );
 
 
         const response =
@@ -2212,7 +2224,8 @@ async function getAnswer(){
                 requestURL,
                 {
                     method:"GET",
-                    redirect:"follow"
+                    redirect:"follow",
+                    cache:"no-store"
                 }
             );
 
@@ -2276,6 +2289,12 @@ async function getAnswer(){
         }
 
 
+        console.log(
+            "Travel AI Response:",
+            data
+        );
+
+
         /* =================================
            FIND AI ANSWER
         ================================= */
@@ -2308,7 +2327,9 @@ async function getAnswer(){
         }
 
 
-        /* EMPTY RESPONSE */
+        /* =================================
+           EMPTY RESPONSE
+        ================================= */
 
         if(
             !result ||
@@ -2316,7 +2337,7 @@ async function getAnswer(){
         ){
 
             throw new Error(
-                "Empty AI response"
+                "Empty AI response from Google Apps Script"
             );
 
         }
@@ -2360,7 +2381,7 @@ async function getAnswer(){
 
 
         showError(
-            "Travel AI is temporarily unavailable. Please check your internet connection and try again."
+            "Travel AI is temporarily unavailable. Please try again."
         );
 
     }
@@ -2445,10 +2466,14 @@ function animateBackground(){
         (targetX - currentX) * 0.025;
 
 
-    panorama.style.transform =
-        "translate3d(" +
-        currentX +
-        "px,0,0)";
+    if(panorama){
+
+        panorama.style.transform =
+            "translate3d(" +
+            currentX +
+            "px,0,0)";
+
+    }
 
 
     requestAnimationFrame(
@@ -2469,146 +2494,5 @@ console.log(
     "✈️ Kainthla Travel AI is ready."
 );
 
-</script>
-
-
-<!-- =================================
-     FOOTER
-================================= -->
-
-<footer class="footer">
-
-    <div class="footer-line"></div>
-
-    <p>
-        Crafted for curious travellers
-    </p>
-
-    <span>
-        KAINTHLA TRAVEL AI
-    </span>
-
-</footer>
-
-
-<style>
-
-/* =========================================
-   FOOTER
-========================================= */
-
-.footer{
-
-    width:100%;
-
-    padding:
-    30px 20px 35px;
-
-    text-align:center;
-
-    color:
-    rgba(255,255,255,.32);
-}
-
-
-.footer-line{
-
-    width:50px;
-
-    height:1px;
-
-    margin:
-    0 auto 14px;
-
-    background:
-    rgba(255,255,255,.15);
-}
-
-
-.footer p{
-
-    font-size:9px;
-
-    margin-bottom:5px;
-}
-
-
-.footer span{
-
-    font-size:8px;
-
-    letter-spacing:2px;
-
-    color:
-    rgba(255,255,255,.20);
-}
-
-
-/* =========================================
-   HIDDEN
-========================================= */
-
-[hidden]{
-
-    display:none !important;
-
-}
-
-
-/* =========================================
-   BUTTON / TEXTAREA
-========================================= */
-
-button,
-textarea{
-
-    -webkit-tap-highlight-color:
-    transparent;
-
-}
-
-
-/* =========================================
-   FINAL MOBILE
-========================================= */
-
-@media(max-width:480px){
-
-    .ai-section{
-
-        padding-top:5px;
-
-    }
-
-    .ai-card{
-
-        border-radius:24px;
-
-    }
-
-}
-
-
-/* =========================================
-   DESKTOP
-========================================= */
-
-@media(min-width:700px){
-
-    .footer{
-
-        padding-bottom:45px;
-
-    }
-
-}
-
-</style>
-
-
-</div>
-
-
-</body>
-
-</html>
+      </script>
+      

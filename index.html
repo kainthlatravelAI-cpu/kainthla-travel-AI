@@ -9,20 +9,21 @@
       content="width=device-width, initial-scale=1.0">
 
 <meta name="theme-color"
-      content="#030712">
+      content="#030812">
 
 <title>Kainthla Travel AI</title>
 
+
 <style>
 
-/* ==============================
+/* =====================================
    RESET
-============================== */
+===================================== */
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html{
@@ -30,7 +31,9 @@ html{
 }
 
 body{
+
     min-height:100vh;
+
     overflow-x:hidden;
 
     font-family:
@@ -41,63 +44,85 @@ body{
     "Segoe UI",
     sans-serif;
 
-    color:#fff;
-    background:#030712;
+    color:#ffffff;
+
+    background:#030812;
 }
 
 
-/* ==============================
+/* =====================================
    APP
-============================== */
+===================================== */
 
 .app{
+
     position:relative;
+
+    width:100%;
+
     min-height:100vh;
+
     overflow:hidden;
 }
 
 
-/* ==============================
-   FIXED BACKGROUND
-============================== */
+/* =====================================
+   PANORAMA BACKGROUND
+===================================== */
 
 #panorama{
+
     position:fixed;
+
     inset:0;
 
     width:100%;
     height:100%;
 
     z-index:-10;
+
     overflow:hidden;
 
-    background:#030712;
+    background:#030812;
 }
 
 
-/* background image */
+/* BACKGROUND IMAGE */
 
 #panorama-image{
+
     position:absolute;
-    inset:0;
+
+    top:0;
+    left:0;
 
     width:100%;
     height:100%;
 
     object-fit:cover;
+
     object-position:center;
 
-    transform:scale(1.08);
+    user-select:none;
 
     pointer-events:none;
-    user-select:none;
+
+    transform:
+    scale(1.08);
+
+    will-change:
+    transform;
 }
 
 
-/* dark cinematic layer */
+/* =====================================
+   DARK CINEMATIC OVERLAY
+===================================== */
 
 #panorama-overlay{
+
     position:absolute;
+
     inset:0;
 
     z-index:2;
@@ -105,20 +130,25 @@ body{
     pointer-events:none;
 
     background:
+
     linear-gradient(
         180deg,
-        rgba(2,8,20,.25),
-        rgba(2,8,20,.48) 42%,
-        rgba(1,4,12,.82) 78%,
-        rgba(1,3,9,.97)
+        rgba(2,7,18,.28) 0%,
+        rgba(2,7,18,.42) 38%,
+        rgba(1,4,11,.72) 72%,
+        rgba(1,3,8,.94) 100%
     );
 }
 
 
-/* blue atmospheric glow */
+/* =====================================
+   BLUE ATMOSPHERE
+===================================== */
 
 #panorama-glow{
+
     position:absolute;
+
     inset:0;
 
     z-index:3;
@@ -126,53 +156,65 @@ body{
     pointer-events:none;
 
     background:
+
     radial-gradient(
         circle at 50% 30%,
-        rgba(20,160,255,.20),
+        rgba(25,155,235,.16),
         transparent 42%
     ),
 
     radial-gradient(
         circle at 50% 100%,
-        rgba(0,0,0,.55),
-        transparent 60%
+        rgba(0,0,0,.48),
+        transparent 58%
     );
 }
 
 
-/* ==============================
+/* =====================================
    NAVBAR
-============================== */
+===================================== */
 
 .navbar{
+
     position:relative;
-    z-index:20;
+
+    z-index:10;
 
     width:100%;
 
-    padding:18px 17px;
+    padding:
+    18px 17px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 }
 
 
-/* ==============================
+/* =====================================
    BRAND
-============================== */
+===================================== */
 
 .brand{
+
     display:flex;
+
     align-items:center;
+
     gap:10px;
 }
 
+
 .brand-icon{
-    width:43px;
-    height:43px;
+
+    width:42px;
+    height:42px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -182,27 +224,39 @@ body{
     rgba(255,255,255,.09);
 
     border:
-    1px solid rgba(255,255,255,.15);
+    1px solid
+    rgba(255,255,255,.15);
 
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter:
+    blur(18px);
+
+    -webkit-backdrop-filter:
+    blur(18px);
 
     box-shadow:
-    0 10px 30px rgba(0,0,0,.25);
+    0 8px 30px
+    rgba(0,0,0,.25);
 
     font-size:20px;
 }
 
+
 .brand-name{
+
     font-size:15px;
-    font-weight:800;
+
     line-height:1;
+
+    font-weight:800;
 }
 
+
 .brand-sub{
-    margin-top:5px;
+
+    margin-top:4px;
 
     font-size:8px;
+
     letter-spacing:2px;
 
     color:
@@ -210,16 +264,20 @@ body{
 }
 
 
-/* ==============================
-   AI STATUS
-============================== */
+/* =====================================
+   ONLINE STATUS
+===================================== */
 
 .status{
+
     display:flex;
+
     align-items:center;
+
     gap:7px;
 
-    padding:9px 12px;
+    padding:
+    9px 12px;
 
     border-radius:30px;
 
@@ -227,10 +285,14 @@ body{
     rgba(255,255,255,.07);
 
     border:
-    1px solid rgba(255,255,255,.12);
+    1px solid
+    rgba(255,255,255,.12);
 
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter:
+    blur(18px);
+
+    -webkit-backdrop-filter:
+    blur(18px);
 
     font-size:10px;
 
@@ -238,7 +300,9 @@ body{
     rgba(255,255,255,.75);
 }
 
+
 .status-dot{
+
     width:7px;
     height:7px;
 
@@ -247,213 +311,207 @@ body{
     background:#55e59a;
 
     box-shadow:
-    0 0 12px rgba(85,229,154,.9);
+    0 0 12px
+    rgba(85,229,154,.9);
 }
 
 
-/* ==============================
+/* =====================================
    HERO
-============================== */
+===================================== */
 
 .hero{
+
     position:relative;
+
     z-index:5;
 
     width:100%;
 
+    min-height:
+    calc(100vh - 78px);
+
     padding:
-    28px 17px 35px;
+    34px 17px 45px;
 
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
 
     text-align:center;
 }
 
 
-/* ==============================
-   PANORAMA VIEWER
-============================== */
+/* =====================================
+   360° VIEWER
+===================================== */
 
 .viewer{
+
     position:relative;
 
-    width:min(78vw,340px);
-    height:min(78vw,340px);
+    width:
+    min(78vw,330px);
+
+    height:
+    min(78vw,330px);
 
     margin:
-    12px 0 28px;
+    12px 0 30px;
 
     overflow:hidden;
 
     border-radius:50%;
 
     background:
-    rgba(5,15,27,.45);
+    rgba(0,0,0,.20);
 
     border:
-    1px solid rgba(255,255,255,.20);
+    1px solid
+    rgba(255,255,255,.20);
 
     box-shadow:
 
     0 30px 90px
-    rgba(0,0,0,.58),
+    rgba(0,0,0,.55),
 
-    0 0 70px
-    rgba(20,160,255,.16),
-
-    inset 0 0 40px
-    rgba(255,255,255,.04);
+    0 0 65px
+    rgba(20,155,235,.14);
 
     cursor:grab;
 
     touch-action:pan-y;
 
     user-select:none;
+
+    -webkit-user-select:none;
 }
 
-.viewer.dragging{
+
+.viewer:active{
+
     cursor:grabbing;
 }
 
 
-/* ==============================
-   PANORAMA TRACK
-============================== */
+/* =====================================
+   PANORAMA INSIDE CIRCLE
+===================================== */
 
-.panorama-track{
+.viewer-image{
+
     position:absolute;
 
     top:0;
     left:0;
 
-    height:100%;
-
-    display:flex;
-
-    will-change:transform;
-
-    pointer-events:none;
-}
-
-
-/* both panorama copies */
-
-.panorama-copy{
-    display:block;
-
     width:auto;
+
     height:100%;
 
     max-width:none;
-
-    flex-shrink:0;
-
-    object-fit:cover;
 
     user-select:none;
 
     -webkit-user-drag:none;
 
     pointer-events:none;
+
+    will-change:
+    transform;
 }
 
 
-/* ==============================
-   VIEWER SHADE
-============================== */
+/* =====================================
+   VIEWER OUTER RING
+===================================== */
 
-.viewer-shade{
+.viewer-ring{
+
     position:absolute;
-    inset:0;
+
+    inset:-9px;
 
     z-index:5;
+
+    border-radius:50%;
+
+    border:
+    1px solid
+    rgba(255,255,255,.18);
+
+    box-shadow:
+    0 0 35px
+    rgba(30,170,255,.14);
+
+    pointer-events:none;
+}
+
+
+/* =====================================
+   VIEWER INNER SHADOW
+===================================== */
+
+.viewer-shade{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:4;
 
     border-radius:50%;
 
     pointer-events:none;
 
     background:
+
     radial-gradient(
         circle at center,
-        transparent 42%,
-        rgba(0,0,0,.08) 65%,
-        rgba(0,0,0,.48) 100%
+        transparent 48%,
+        rgba(0,0,0,.25) 100%
     );
 }
 
 
-/* ==============================
-   VIEWER RING
-============================== */
+/* =====================================
+   SWIPE HINT
+===================================== */
 
-.viewer-ring{
+.swipe-hint{
+
     position:absolute;
-
-    inset:0;
 
     z-index:8;
 
-    border-radius:50%;
-
-    border:
-    1px solid rgba(255,255,255,.22);
-
-    pointer-events:none;
-
-    box-shadow:
-    inset 0 0 25px
-    rgba(255,255,255,.06);
-}
-
-
-/* outer ring */
-
-.viewer::after{
-    content:"";
-
-    position:absolute;
-
-    inset:-9px;
-
-    border-radius:50%;
-
-    border:
-    1px solid rgba(255,255,255,.12);
-
-    pointer-events:none;
-}
-
-
-/* ==============================
-   SWIPE HINT
-============================== */
-
-.swipe-hint{
-    position:absolute;
-
-    z-index:10;
-
     left:50%;
+
     bottom:15px;
 
-    transform:translateX(-50%);
+    transform:
+    translateX(-50%);
 
-    padding:7px 11px;
+    padding:
+    7px 11px;
 
     border-radius:30px;
 
     white-space:nowrap;
 
     background:
-    rgba(0,0,0,.42);
+    rgba(0,0,0,.40);
 
     border:
-    1px solid rgba(255,255,255,.12);
+    1px solid
+    rgba(255,255,255,.12);
 
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:
+    blur(12px);
+
+    -webkit-backdrop-filter:
+    blur(12px);
 
     font-size:8px;
 
@@ -462,16 +520,19 @@ body{
     color:
     rgba(255,255,255,.72);
 
+    pointer-events:none;
+
     transition:
     opacity .5s ease;
 }
 
 
-/* ==============================
-   HERO TEXT
-============================== */
+/* =====================================
+   HERO KICKER
+===================================== */
 
 .hero-kicker{
+
     margin-bottom:12px;
 
     font-size:10px;
@@ -485,32 +546,44 @@ body{
 }
 
 
-.hero-title{
-    font-size:
-    clamp(44px,12vw,78px);
+/* =====================================
+   HERO TITLE
+===================================== */
 
-    line-height:.93;
+.hero-title{
+
+    font-size:
+    clamp(43px,12vw,76px);
+
+    line-height:.94;
 
     font-weight:900;
 
     letter-spacing:-3px;
 
     background:
+
     linear-gradient(
         180deg,
-        #fff,
-        #b7c8da
+        #ffffff,
+        #b8c9dc
     );
 
     -webkit-background-clip:text;
+
     background-clip:text;
 
     color:transparent;
 }
 
 
+/* =====================================
+   HERO DESCRIPTION
+===================================== */
+
 .hero-description{
-    max-width:570px;
+
+    max-width:560px;
 
     margin-top:18px;
 
@@ -523,12 +596,14 @@ body{
 }
 
 
-/* ==============================
+/* =====================================
    GLASS
-============================== */
+===================================== */
 
 .glass{
+
     background:
+
     linear-gradient(
         135deg,
         rgba(255,255,255,.10),
@@ -536,10 +611,12 @@ body{
     );
 
     border:
-    1px solid rgba(255,255,255,.13);
+    1px solid
+    rgba(255,255,255,.13);
 
     box-shadow:
-    0 25px 80px rgba(0,0,0,.30);
+    0 25px 80px
+    rgba(0,0,0,.30);
 
     backdrop-filter:
     blur(24px)
@@ -551,45 +628,54 @@ body{
 }
 
 
-/* ==============================
+/* =====================================
    DESKTOP
-============================== */
+===================================== */
 
 @media(min-width:700px){
 
     .navbar{
-        padding:24px 35px;
+
+        padding:
+        24px 35px;
     }
 
     .hero{
-        padding-top:45px;
+
+        padding-top:55px;
     }
 
     .viewer{
-        width:380px;
-        height:380px;
+
+        width:360px;
+        height:360px;
     }
 
     .hero-description{
+
         font-size:15px;
     }
+
 }
 
 
-/* ==============================
-   SMALL MOBILE
-============================== */
+/* =====================================
+   SMALL PHONES
+===================================== */
 
 @media(max-width:360px){
 
     .viewer{
+
         width:76vw;
         height:76vw;
     }
 
     .hero-title{
+
         font-size:40px;
     }
+
 }
 
 </style>
@@ -599,9 +685,10 @@ body{
 
 <body>
 
-<!-- ==============================
-     BACKGROUND
-============================== -->
+
+<!-- =====================================
+     PANORAMA BACKGROUND
+===================================== -->
 
 <div id="panorama">
 
@@ -618,12 +705,16 @@ body{
 </div>
 
 
+<!-- =====================================
+     MAIN APP
+===================================== -->
+
 <div class="app">
 
 
-<!-- ==============================
+<!-- =====================================
      NAVBAR
-============================== -->
+===================================== -->
 
 <header class="navbar">
 
@@ -659,40 +750,29 @@ body{
 </header>
 
 
-<!-- ==============================
+<!-- =====================================
      HERO
-============================== -->
+===================================== -->
 
 <main class="hero">
 
 
-    <!-- PANORAMA -->
+    <!-- =================================
+         CIRCULAR PANORAMA VIEWER
+    ================================== -->
 
     <div
         class="viewer glass"
         id="viewer"
     >
 
-        <div
-            class="panorama-track"
-            id="panoramaTrack"
+        <img
+            class="viewer-image"
+            id="viewerImage"
+            src="1aebea2f-ed66-4843-80ef-f381f65cfe50.webp"
+            alt="Kainthla Travel panorama"
+            draggable="false"
         >
-
-            <img
-                class="panorama-copy"
-                src="1aebea2f-ed66-4843-80ef-f381f65cfe50.webp"
-                alt="Travel panorama"
-                draggable="false"
-            >
-
-            <img
-                class="panorama-copy"
-                src="1aebea2f-ed66-4843-80ef-f381f65cfe50.webp"
-                alt=""
-                draggable="false"
-            >
-
-        </div>
 
 
         <div class="viewer-shade"></div>
@@ -700,17 +780,16 @@ body{
         <div class="viewer-ring"></div>
 
 
-        <div
-            class="swipe-hint"
-            id="swipeHint"
-        >
+        <div class="swipe-hint">
             ← SWIPE TO EXPLORE →
         </div>
 
     </div>
 
 
-    <!-- TEXT -->
+    <!-- =================================
+         HERO CONTENT
+    ================================== -->
 
     <div class="hero-kicker">
         EXPLORE BEYOND
@@ -718,21 +797,24 @@ body{
 
 
     <h1 class="hero-title">
+
         Where will<br>
         you go?
+
     </h1>
 
 
     <p class="hero-description">
-        Tell Kainthla Travel AI what kind of
-        journey you're looking for. Discover
-        destinations, experiences and hidden
-        places made for you.
+
+        Explore destinations, discover hidden
+        places and let Kainthla Travel AI help
+        you plan your next journey.
+
     </p>
 
 
 </main>
-<script>
+      <script>
 
 /* =========================================
    KAINTHLA TRAVEL AI
@@ -1232,7 +1314,7 @@ console.log(
 }
 
 </style>
-<!-- =================================
+      <!-- =================================
      AI TRAVEL SECTION
 ================================= -->
 
@@ -1960,7 +2042,7 @@ console.log(
 }
 
 </style>
-<script>
+      <script>
 
 /* =========================================
    KAINTHLA TRAVEL AI

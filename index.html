@@ -2044,6 +2044,8 @@ console.log(
 </style>
       <script>
 
+                        
+
 /* =========================================
    KAINTHLA TRAVEL AI
    GOOGLE APPS SCRIPT CONNECTION
@@ -2089,15 +2091,19 @@ const charCount =
    CHARACTER COUNTER
 ========================================= */
 
-questionInput.addEventListener(
-    "input",
-    function(){
+if (questionInput && charCount) {
 
-        charCount.textContent =
-            this.value.length + " / 500";
+    questionInput.addEventListener(
+        "input",
+        function(){
 
-    }
-);
+            charCount.textContent =
+                this.value.length + " / 500";
+
+        }
+    );
+
+}
 
 
 /* =========================================
@@ -2113,15 +2119,20 @@ document.querySelectorAll(
         function(){
 
             const question =
-                this.dataset.question;
+                this.dataset.question || "";
 
-            questionInput.value =
-                question;
+            if(questionInput){
+                questionInput.value = question;
+            }
 
-            charCount.textContent =
-                question.length + " / 500";
+            if(charCount){
+                charCount.textContent =
+                    question.length + " / 500";
+            }
 
-            questionInput.focus();
+            if(questionInput){
+                questionInput.focus();
+            }
 
         }
     );
@@ -2135,19 +2146,22 @@ document.querySelectorAll(
 
 function showError(message){
 
-    errorText.textContent =
-        message;
+    if(errorText){
+        errorText.textContent = message;
+    }
 
-    errorBox.hidden =
-        false;
+    if(errorBox){
+        errorBox.hidden = false;
+    }
 
 }
 
 
 function hideError(){
 
-    errorBox.hidden =
-        true;
+    if(errorBox){
+        errorBox.hidden = true;
+    }
 
 }
 
@@ -2181,14 +2195,11 @@ async function getAnswer(){
 
     hideError();
 
-    answerBox.hidden =
-        true;
+    answerBox.hidden = true;
 
-    loadingBox.hidden =
-        false;
+    loadingBox.hidden = false;
 
-    answerBtn.disabled =
-        true;
+    answerBtn.disabled = true;
 
     btnText.textContent =
         "THINKING...";
@@ -2197,7 +2208,7 @@ async function getAnswer(){
     try{
 
         /* =================================
-           SEND QUESTION TO GOOGLE APPS SCRIPT
+           SEND QUESTION TO APPS SCRIPT
         ================================= */
 
         const requestURL =
@@ -2207,7 +2218,7 @@ async function getAnswer(){
 
 
         console.log(
-            "Travel AI Request:",
+            "Kainthla Travel AI Request:",
             requestURL
         );
 
@@ -2239,62 +2250,41 @@ async function getAnswer(){
            READ RESPONSE
         ================================= */
 
-        const contentType =
-            response.headers.get(
-                "content-type"
-            ) || "";
+        const text =
+            await response.text();
+
+
+        console.log(
+            "Kainthla Travel AI Raw Response:",
+            text
+        );
 
 
         let data;
 
 
-        if(
-            contentType.includes(
-                "application/json"
-            )
-        ){
+        try{
 
             data =
-                await response.json();
+                JSON.parse(text);
 
         }
 
-        else{
+        catch(error){
 
-            const text =
-                await response.text();
-
-
-            try{
-
-                data =
-                    JSON.parse(text);
-
-            }
-
-            catch{
-
-                data =
-                    text;
-
-            }
+            throw new Error(
+                "Invalid JSON response from Apps Script."
+            );
 
         }
-
-
-        console.log(
-            "Travel AI Response:",
-            data
-        );
 
 
         /* =================================
-           CHECK BACKEND ERROR
+           BACKEND ERROR
         ================================= */
 
         if(
             data &&
-            typeof data === "object" &&
             data.success === false
         ){
 
@@ -2338,9 +2328,7 @@ async function getAnswer(){
         }
 
 
-        /* =================================
-           EMPTY RESPONSE
-        ================================= */
+        /* EMPTY RESPONSE */
 
         if(
             !result ||
@@ -2348,7 +2336,7 @@ async function getAnswer(){
         ){
 
             throw new Error(
-                "Empty AI response from Google Apps Script."
+                "Empty AI response."
             );
 
         }
@@ -2418,33 +2406,41 @@ async function getAnswer(){
    BUTTON CLICK
 ========================================= */
 
-answerBtn.addEventListener(
-    "click",
-    getAnswer
-);
+if(answerBtn){
+
+    answerBtn.addEventListener(
+        "click",
+        getAnswer
+    );
+
+}
 
 
 /* =========================================
    CTRL + ENTER
 ========================================= */
 
-questionInput.addEventListener(
-    "keydown",
-    function(event){
+if(questionInput){
 
-        if(
-            event.key === "Enter" &&
-            event.ctrlKey
-        ){
+    questionInput.addEventListener(
+        "keydown",
+        function(event){
 
-            event.preventDefault();
+            if(
+                event.key === "Enter" &&
+                event.ctrlKey
+            ){
 
-            getAnswer();
+                event.preventDefault();
+
+                getAnswer();
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 /* =========================================
@@ -2464,8 +2460,11 @@ document.addEventListener(
     function(event){
 
         targetX =
-            (event.clientX /
-            window.innerWidth - 0.5) * 14;
+            (
+                event.clientX /
+                window.innerWidth -
+                0.5
+            ) * 14;
 
     }
 );
@@ -2644,7 +2643,3 @@ textarea{
 }
 
 </style>
-
-</div>
-</body>
-</html>

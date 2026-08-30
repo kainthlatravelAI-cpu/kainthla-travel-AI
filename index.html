@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#050914">
+<meta name="theme-color"
+      content="#05070c">
 
 <title>Kainthla Travel AI</title>
 
 <style>
 
-/* ================================
+/* =========================
    RESET
-================================ */
+========================= */
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html{
@@ -28,440 +30,544 @@ html{
 }
 
 body{
-    width:100%;
     min-height:100vh;
     overflow-x:hidden;
-    background:#050914;
-    color:#fff;
+
     font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+    color:#fff;
+
+    background:#03060b;
 }
 
 
-/* ================================
-   360 BACKGROUND
-================================ */
-
-#travel360{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:-5;
-    overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(40,120,180,.28),
-            transparent 45%
-        ),
-        linear-gradient(
-            180deg,
-            #071321 0%,
-            #030711 100%
-        );
-}
-
-#travel360::before{
-    content:"";
-    position:absolute;
-    inset:-10%;
-    background:
-        radial-gradient(
-            circle at 20% 30%,
-            rgba(0,190,255,.12),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 80% 65%,
-            rgba(110,70,255,.14),
-            transparent 32%
-        );
-    filter:blur(30px);
-    animation:
-        backgroundMove 12s ease-in-out infinite alternate;
-}
-
-@keyframes backgroundMove{
-
-    0%{
-        transform:scale(1)
-        translate3d(-2%,0,0);
-    }
-
-    100%{
-        transform:scale(1.12)
-        translate3d(2%,-2%,0);
-    }
-}
-
-
-/* ================================
-   DARK OVERLAY
-================================ */
-
-.bg-overlay{
-    position:fixed;
-    inset:0;
-    z-index:-4;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(2,7,18,.28),
-            rgba(2,6,15,.72)
-        );
-
-    pointer-events:none;
-}
-
-
-/* ================================
-   NOISE
-================================ */
-
-.noise{
-    position:fixed;
-    inset:0;
-    z-index:20;
-
-    pointer-events:none;
-
-    opacity:.035;
-
-    background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-}
-
-
-/* ================================
-   APP
-================================ */
+/* =========================
+   MAIN APP
+========================= */
 
 .app{
     position:relative;
+
     min-height:100vh;
     width:100%;
+
+    overflow:hidden;
 }
 
 
-/* ================================
-   NAVBAR
-================================ */
+/* =========================
+   PANORAMA BACKGROUND
+========================= */
+
+#panorama{
+
+    position:fixed;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:-10;
+
+    background:
+    #050912;
+
+    overflow:hidden;
+}
+
+
+/*
+   Panorama image will be connected
+   in Part 2 using your exact file.
+*/
+
+#panorama-image{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    height:100%;
+    width:auto;
+
+    min-width:100%;
+
+    object-fit:cover;
+
+    user-select:none;
+    pointer-events:none;
+
+    transform:
+    translateX(0);
+
+    will-change:
+    transform;
+}
+
+
+/* =========================
+   CINEMATIC OVERLAY
+========================= */
+
+#panorama-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+        180deg,
+        rgba(2,6,14,.30),
+        rgba(2,6,14,.48) 40%,
+        rgba(1,4,9,.90) 100%
+    );
+
+    pointer-events:none;
+}
+
+
+/* =========================
+   TOP NAVBAR
+========================= */
 
 .navbar{
+
     position:relative;
 
     width:100%;
+
     padding:
-        18px
-        18px
-        10px;
+    18px 17px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
-    z-index:10;
+    z-index:5;
 }
 
+
+/* =========================
+   BRAND
+========================= */
+
 .brand{
+
     display:flex;
+
     align-items:center;
+
     gap:10px;
 }
 
-.brand-mark{
-    width:38px;
-    height:38px;
+.brand-icon{
 
-    border-radius:13px;
+    width:42px;
+    height:42px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
-    font-size:19px;
+    border-radius:14px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.22),
-            rgba(255,255,255,.06)
-        );
+    rgba(255,255,255,.09);
 
     border:
-        1px solid
-        rgba(255,255,255,.16);
+    1px solid
+    rgba(255,255,255,.15);
 
-    box-shadow:
-        0 8px 30px
-        rgba(0,0,0,.25);
+    backdrop-filter:
+    blur(18px);
 
-    backdrop-filter:blur(16px);
-}
-
-.brand-text{
-    line-height:1.05;
+    font-size:20px;
 }
 
 .brand-name{
+
     font-size:15px;
+
     font-weight:800;
-    letter-spacing:.3px;
+
+    letter-spacing:.2px;
 }
 
 .brand-sub{
-    margin-top:3px;
 
-    font-size:9px;
-    letter-spacing:1.8px;
+    margin-top:2px;
 
-    color:rgba(255,255,255,.52);
+    font-size:8px;
 
-    text-transform:uppercase;
+    letter-spacing:2px;
+
+    color:
+    rgba(255,255,255,.48);
 }
 
+
+/* =========================
+   STATUS
+========================= */
+
 .status{
+
     display:flex;
+
     align-items:center;
+
     gap:7px;
 
-    padding:8px 11px;
+    padding:
+    9px 12px;
 
     border-radius:30px;
 
     background:
-        rgba(255,255,255,.07);
+    rgba(255,255,255,.07);
 
     border:
-        1px solid
-        rgba(255,255,255,.10);
+    1px solid
+    rgba(255,255,255,.12);
 
-    backdrop-filter:blur(14px);
+    backdrop-filter:
+    blur(16px);
 
     font-size:10px;
-    color:rgba(255,255,255,.72);
+
+    color:
+    rgba(255,255,255,.72);
 }
 
 .status-dot{
+
     width:7px;
     height:7px;
 
     border-radius:50%;
 
-    background:#54e69a;
+    background:#53e39a;
 
     box-shadow:
-        0 0 12px
-        rgba(84,230,154,.8);
-
-    animation:
-        pulse 2s infinite;
-}
-
-@keyframes pulse{
-
-    0%,100%{
-        opacity:1;
-        transform:scale(1);
-    }
-
-    50%{
-        opacity:.45;
-        transform:scale(.75);
-    }
+    0 0 12px
+    rgba(83,227,154,.9);
 }
 
 
-/* ================================
+/* =========================
    HERO
-================================ */
+========================= */
 
 .hero{
+
+    position:relative;
+
     width:100%;
 
+    min-height:
+    calc(100vh - 78px);
+
     padding:
-        35px
-        18px
-        25px;
+    35px 17px 40px;
 
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
 
     text-align:center;
+
+    z-index:2;
 }
 
-.hero-image-wrap{
+
+/* =========================
+   360 VIEWER
+========================= */
+
+.viewer{
+
     position:relative;
 
-    width:min(76vw,310px);
-    aspect-ratio:1/1;
+    width:
+    min(82vw,330px);
 
-    margin-bottom:24px;
+    height:
+    min(82vw,330px);
+
+    margin-top:10px;
+
+    margin-bottom:30px;
 
     border-radius:50%;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    overflow:hidden;
+
+    touch-action:
+    pan-y;
+
+    cursor:
+    grab;
+
+    background:
+    rgba(0,0,0,.20);
+
+    border:
+    1px solid
+    rgba(255,255,255,.18);
+
+    box-shadow:
+
+    0 30px 90px
+    rgba(0,0,0,.55),
+
+    0 0 60px
+    rgba(40,160,255,.12);
 }
 
-.hero-image-wrap::before{
+.viewer:active{
+
+    cursor:
+    grabbing;
+}
+
+
+/* VIEWER IMAGE */
+
+.viewer-image{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    height:100%;
+
+    width:auto;
+
+    max-width:none;
+
+    user-select:none;
+
+    pointer-events:none;
+
+    will-change:
+    transform;
+}
+
+
+/* =========================
+   VIEWER RINGS
+========================= */
+
+.viewer::before{
+
     content:"";
 
     position:absolute;
-    inset:-12px;
+
+    inset:-9px;
 
     border-radius:50%;
 
     border:
-        1px solid
-        rgba(255,255,255,.10);
+    1px solid
+    rgba(255,255,255,.18);
+
+    pointer-events:none;
+
+    z-index:4;
 
     box-shadow:
-        0 0 80px
-        rgba(0,170,255,.14);
-
-    animation:
-        rotateGlow 18s linear infinite;
+    0 0 35px
+    rgba(40,170,255,.13);
 }
 
-@keyframes rotateGlow{
+.viewer::after{
 
-    from{
-        transform:rotate(0deg);
-    }
+    content:"";
 
-    to{
-        transform:rotate(360deg);
-    }
-}
+    position:absolute;
 
-.hero-image{
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
+    inset:0;
 
     border-radius:50%;
-
-    display:block;
-
-    border:
-        1px solid
-        rgba(255,255,255,.18);
-
-    box-shadow:
-        0 25px 80px
-        rgba(0,0,0,.45);
 
     background:
-        rgba(255,255,255,.05);
+    radial-gradient(
+        circle,
+        transparent 52%,
+        rgba(0,0,0,.20) 100%
+    );
+
+    pointer-events:none;
+
+    z-index:3;
 }
 
+
+/* =========================
+   SWIPE HINT
+========================= */
+
+.swipe-hint{
+
+    position:absolute;
+
+    bottom:15px;
+
+    left:50%;
+
+    transform:
+    translateX(-50%);
+
+    z-index:6;
+
+    padding:
+    7px 11px;
+
+    border-radius:30px;
+
+    background:
+    rgba(0,0,0,.38);
+
+    border:
+    1px solid
+    rgba(255,255,255,.12);
+
+    backdrop-filter:
+    blur(12px);
+
+    font-size:8px;
+
+    letter-spacing:
+    1.4px;
+
+    color:
+    rgba(255,255,255,.70);
+
+    white-space:nowrap;
+
+    pointer-events:none;
+}
+
+
+/* =========================
+   HERO TEXT
+========================= */
+
 .hero-kicker{
+
     margin-bottom:11px;
 
     font-size:10px;
-    font-weight:700;
+
+    font-weight:800;
 
     letter-spacing:3px;
 
-    text-transform:uppercase;
-
     color:
-        rgba(255,255,255,.55);
+    rgba(255,255,255,.55);
 }
 
-.hero h1{
-    max-width:700px;
+.hero-title{
 
     font-size:
-        clamp(38px,11vw,72px);
+    clamp(43px,12vw,76px);
 
-    line-height:.95;
+    line-height:.93;
 
     font-weight:900;
 
-    letter-spacing:-2.5px;
+    letter-spacing:-3px;
 
     background:
-        linear-gradient(
-            180deg,
-            #ffffff 15%,
-            #a9c7e8 100%
-        );
+    linear-gradient(
+        180deg,
+        #fff,
+        #b7c8db
+    );
 
     -webkit-background-clip:text;
+
     background-clip:text;
 
     color:transparent;
 }
 
 .hero-description{
-    max-width:520px;
+
+    max-width:550px;
 
     margin-top:17px;
 
-    font-size:14px;
+    font-size:13px;
+
     line-height:1.65;
 
     color:
-        rgba(255,255,255,.62);
+    rgba(255,255,255,.62);
 }
 
 
-/* ================================
-   GLASS CONTAINER
-================================ */
+/* =========================
+   GLASS
+========================= */
 
 .glass{
+
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.105),
-            rgba(255,255,255,.035)
-        );
+    rgba(255,255,255,.07);
 
     border:
-        1px solid
-        rgba(255,255,255,.12);
+    1px solid
+    rgba(255,255,255,.12);
 
     box-shadow:
-        0 25px 80px
-        rgba(0,0,0,.28);
+    0 20px 70px
+    rgba(0,0,0,.28);
 
     backdrop-filter:
-        blur(22px)
-        saturate(130%);
+    blur(22px);
 
     -webkit-backdrop-filter:
-        blur(22px)
-        saturate(130%);
+    blur(22px);
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* =========================
+   DESKTOP
+========================= */
 
 @media(min-width:700px){
 
     .navbar{
         padding:
-            25px
-            35px
-            15px;
+        24px 35px;
     }
 
     .hero{
         padding-top:55px;
+    }
+
+    .viewer{
+        width:360px;
+        height:360px;
     }
 
     .hero-description{
@@ -470,41 +576,74 @@ body{
 
 }
 
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media(max-width:360px){
+
+    .viewer{
+        width:78vw;
+        height:78vw;
+    }
+
+    .hero-title{
+        font-size:40px;
+    }
+
+}
+
 </style>
 
 </head>
 
+
 <body>
 
-<!-- 360° BACKGROUND -->
-<div id="travel360"></div>
 
-<!-- DARK CINEMATIC OVERLAY -->
-<div class="bg-overlay"></div>
+<!-- =========================
+     PANORAMA SYSTEM
+========================= -->
 
-<!-- FILM GRAIN -->
-<div class="noise"></div>
+<div id="panorama">
 
+    <img
+        id="panorama-image"
+        src="1aebea2f-ed66-4843-80ef-f381f65cfe50.web"
+        alt=""
+    >
+
+    <div id="panorama-overlay"></div>
+
+</div>
+
+
+<!-- =========================
+     APPLICATION
+========================= -->
 
 <div class="app">
 
+
     <!-- NAVBAR -->
+
     <header class="navbar">
 
         <div class="brand">
 
-            <div class="brand-mark">
+            <div class="brand-icon">
                 ✈️
             </div>
 
-            <div class="brand-text">
+            <div>
 
                 <div class="brand-name">
                     Kainthla
                 </div>
 
                 <div class="brand-sub">
-                    Travel AI
+                    TRAVEL AI
                 </div>
 
             </div>
@@ -524,273 +663,772 @@ body{
 
 
     <!-- HERO -->
+
     <main class="hero">
 
-        <div class="hero-image-wrap">
+
+        <!-- =====================
+             360° VIEWER
+        ====================== -->
+
+        <div
+            class="viewer glass"
+            id="viewer"
+        >
 
             <img
-                class="hero-image"
+                class="viewer-image"
+                id="viewerImage"
                 src="1aebea2f-ed66-4843-80ef-f381f65cfe50.web"
-                alt="Kainthla Travel AI"
+                alt="Travel panorama"
+                draggable="false"
             >
+
+            <div class="swipe-hint">
+                ← SWIPE TO EXPLORE →
+            </div>
 
         </div>
 
 
         <div class="hero-kicker">
-            Explore Beyond
+            EXPLORE BEYOND
         </div>
 
 
-        <h1>
+        <h1 class="hero-title">
+
             Where will<br>
             you go?
+
         </h1>
 
 
         <p class="hero-description">
-            Tell Kainthla Travel AI what kind of journey
-            you're looking for. Discover destinations,
-            experiences and hidden places made for you.
+
+            Explore destinations, discover hidden
+            places and let Kainthla Travel AI help
+            you plan your next journey.
+
         </p>
+
 
     </main>
-        <!-- ================================
-         AI TRAVEL SEARCH
-    ================================= -->
+    <script>
 
-    <section class="ai-section">
+/* =========================================
+   KAINTHLA TRAVEL AI
+   PANORAMA SWIPE ENGINE
+========================================= */
 
-        <div class="ai-card glass">
+const viewer =
+    document.getElementById("viewer");
 
-            <div class="ai-header">
+const viewerImage =
+    document.getElementById("viewerImage");
 
-                <div class="ai-icon">
-                    ✦
-                </div>
 
-                <div>
-                    <div class="ai-title">
-                        Ask Travel AI
-                    </div>
+/* =========================================
+   PANORAMA STATE
+========================================= */
 
-                    <div class="ai-subtitle">
-                        Your journey starts with a question
-                    </div>
-                </div>
+let imageWidth = 0;
+let viewerWidth = 0;
 
-            </div>
+let currentPosition = 0;
 
+let startPointerX = 0;
+let startPosition = 0;
 
-            <!-- QUESTION INPUT -->
+let isDragging = false;
 
-            <div class="question-box">
 
-                <textarea
-                    id="questionInput"
-                    placeholder="Where should I travel this weekend?"
-                    maxlength="500"
-                    rows="3"
-                ></textarea>
+/* =========================================
+   SET PANORAMA SIZE
+========================================= */
 
-                <div class="input-bottom">
+function setupPanorama(){
 
-                    <span id="charCount">
-                        0 / 500
-                    </span>
+    if(!viewer || !viewerImage){
+        return;
+    }
 
-                    <span class="input-hint">
-                        AI powered
-                    </span>
+    viewerWidth =
+        viewer.clientWidth;
 
-                </div>
+    imageWidth =
+        viewerImage.getBoundingClientRect().width;
 
-            </div>
 
+    /*
+       Agar panorama viewer se chhota hai,
+       to minimum width viewer ke equal rakhenge.
+    */
 
-            <!-- GET ANSWER BUTTON -->
+    if(imageWidth < viewerWidth){
 
-            <button
-                id="answerBtn"
-                class="answer-btn"
-                type="button"
-            >
+        imageWidth =
+            viewerWidth;
 
-                <span class="btn-icon">
-                    ✦
-                </span>
+    }
 
-                <span id="btnText">
-                    GET ANSWER
-                </span>
 
-                <span class="btn-arrow">
-                    →
-                </span>
+    /*
+       Image ko center se start karna.
+    */
 
-            </button>
+    const maximumMove =
+        Math.max(
+            0,
+            imageWidth - viewerWidth
+        );
 
 
-            <!-- LOADING -->
+    currentPosition =
+        maximumMove / 2;
 
-            <div
-                id="loadingBox"
-                class="loading-box"
-                style="display:none;"
-            >
 
-                <div class="loading-spinner"></div>
+    updatePanorama(false);
 
-                <span>
-                    Finding the best answer...
-                </span>
+}
 
-            </div>
 
+/* =========================================
+   UPDATE IMAGE POSITION
+========================================= */
 
-            <!-- ERROR -->
+function updatePanorama(animate = false){
 
-            <div
-                id="errorBox"
-                class="message-box error-message"
-                style="display:none;"
-            >
+    const maximumMove =
+        Math.max(
+            0,
+            imageWidth - viewerWidth
+        );
 
-                <span class="message-icon">
-                    ⚠
-                </span>
 
-                <span id="errorText">
-                    Something went wrong.
-                </span>
+    /*
+       Position ko safe boundary mein rakho.
+    */
 
-            </div>
+    currentPosition =
+        Math.max(
+            0,
+            Math.min(
+                currentPosition,
+                maximumMove
+            )
+        );
 
 
-            <!-- AI ANSWER -->
+    if(animate){
 
-            <div
-                id="answerBox"
-                class="answer-box"
-                style="display:none;"
-            >
+        viewerImage.style.transition =
+            "transform .35s ease";
 
-                <div class="answer-top">
+    }else{
 
-                    <div class="answer-label">
-                        ✦ AI RESPONSE
-                    </div>
+        viewerImage.style.transition =
+            "none";
 
-                    <div class="answer-status">
-                        READY
-                    </div>
+    }
 
-                </div>
 
+    viewerImage.style.transform =
+        "translate3d(" +
+        (-currentPosition) +
+        "px,0,0)";
 
-                <div
-                    id="answerText"
-                    class="answer-text"
-                ></div>
+}
 
-            </div>
 
-        </div>
+/* =========================================
+   POINTER DOWN
+========================================= */
 
-    </section>
+function pointerStart(event){
 
+    isDragging = true;
 
-    <!-- ================================
-         QUICK QUESTIONS
-    ================================= -->
+    startPointerX =
+        event.clientX;
 
-    <section class="quick-section">
+    startPosition =
+        currentPosition;
 
-        <div class="quick-title">
-            Try asking
-        </div>
+    viewer.classList.add(
+        "dragging"
+    );
 
+}
 
-        <div class="quick-list">
 
-            <button
-                class="quick-btn"
-                type="button"
-                data-question="Best places to visit in Himachal Pradesh?"
-            >
-                🏔️ Himachal
-            </button>
+/* =========================================
+   POINTER MOVE
+========================================= */
 
-            <button
-                class="quick-btn"
-                type="button"
-                data-question="Suggest a peaceful weekend getaway in India."
-            >
-                🌿 Peaceful getaway
-            </button>
+function pointerMove(event){
 
-            <button
-                class="quick-btn"
-                type="button"
-                data-question="Best budget travel destinations in India?"
-            >
-                💰 Budget travel
-            </button>
+    if(!isDragging){
+        return;
+    }
 
-            <button
-                class="quick-btn"
-                type="button"
-                data-question="Suggest a romantic destination in India."
-            >
-                ❤️ Romantic trip
-            </button>
 
-        </div>
+    const movement =
+        event.clientX -
+        startPointerX;
 
-    </section>
 
+    /*
+       Finger/mouse right move
+       = panorama left
 
-    <!-- ================================
-         FOOTER
-    ================================= -->
+       Finger/mouse left move
+       = panorama right
+    */
 
-    <footer class="footer">
+    currentPosition =
+        startPosition -
+        movement;
 
-        <div class="footer-line"></div>
 
-        <p>
-            Crafted for curious travellers
-        </p>
+    updatePanorama(false);
 
-        <span>
-            KAINTHLA TRAVEL AI
-        </span>
+}
 
-    </footer>
 
+/* =========================================
+   POINTER END
+========================================= */
 
-</div>
+function pointerEnd(){
+
+    if(!isDragging){
+        return;
+    }
+
+    isDragging = false;
+
+    viewer.classList.remove(
+        "dragging"
+    );
+
+}
+
+
+/* =========================================
+   MOUSE
+========================================= */
+
+viewer.addEventListener(
+    "mousedown",
+    pointerStart
+);
+
+window.addEventListener(
+    "mousemove",
+    pointerMove
+);
+
+window.addEventListener(
+    "mouseup",
+    pointerEnd
+);
+
+
+/* =========================================
+   TOUCH
+========================================= */
+
+viewer.addEventListener(
+    "touchstart",
+    function(event){
+
+        if(!event.touches.length){
+            return;
+        }
+
+
+        isDragging = true;
+
+        startPointerX =
+            event.touches[0].clientX;
+
+        startPosition =
+            currentPosition;
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+viewer.addEventListener(
+    "touchmove",
+    function(event){
+
+        if(!isDragging){
+            return;
+        }
+
+        if(!event.touches.length){
+            return;
+        }
+
+
+        const movement =
+            event.touches[0].clientX -
+            startPointerX;
+
+
+        currentPosition =
+            startPosition -
+            movement;
+
+
+        updatePanorama(false);
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+viewer.addEventListener(
+    "touchend",
+    pointerEnd,
+    {
+        passive:true
+    }
+);
+
+
+/* =========================================
+   IMAGE LOAD
+========================================= */
+
+viewerImage.addEventListener(
+    "load",
+    function(){
+
+        setupPanorama();
+
+    }
+);
+
+
+/* =========================================
+   WINDOW RESIZE
+========================================= */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        setupPanorama();
+
+    }
+);
+
+
+/* =========================================
+   AUTO START
+========================================= */
+
+if(viewerImage.complete){
+
+    setupPanorama();
+
+}
+
+
+/* =========================================
+   SWIPE HINT FADE
+========================================= */
+
+const swipeHint =
+    document.querySelector(
+        ".swipe-hint"
+    );
+
+let hintHidden = false;
+
+
+function hideSwipeHint(){
+
+    if(hintHidden){
+        return;
+    }
+
+    hintHidden = true;
+
+    if(swipeHint){
+
+        swipeHint.style.transition =
+            "opacity .5s ease";
+
+        swipeHint.style.opacity =
+            "0";
+
+    }
+
+}
+
+
+viewer.addEventListener(
+    "mousedown",
+    hideSwipeHint
+);
+
+viewer.addEventListener(
+    "touchstart",
+    hideSwipeHint,
+    {
+        passive:true
+    }
+);
+
+
+/* =========================================
+   KEYBOARD SUPPORT
+========================================= */
+
+window.addEventListener(
+    "keydown",
+    function(event){
+
+        const step = 60;
+
+
+        if(event.key === "ArrowLeft"){
+
+            currentPosition -= step;
+
+            updatePanorama(true);
+
+        }
+
+
+        if(event.key === "ArrowRight"){
+
+            currentPosition += step;
+
+            updatePanorama(true);
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   PANORAMA READY
+========================================= */
+
+console.log(
+    "🌍 Panorama viewer ready."
+);
+
+</script>
 
 
 <style>
 
-/* =====================================
-   AI SECTION
-===================================== */
+/* =========================================
+   DRAGGING STATE
+========================================= */
 
-.ai-section{
-    width:100%;
-    padding:
-        15px
-        16px
-        10px;
+.viewer.dragging{
+
+    cursor:
+    grabbing;
+
 }
 
-.ai-card{
+
+/* =========================================
+   MOBILE TOUCH
+========================================= */
+
+.viewer{
+
+    -webkit-user-select:none;
+
+    user-select:none;
+
+    -webkit-touch-callout:none;
+
+}
+
+
+/* =========================================
+   IMAGE SMOOTHNESS
+========================================= */
+
+.viewer-image{
+
+    backface-visibility:hidden;
+
+    -webkit-backface-visibility:hidden;
+}
+
+
+/* =========================================
+   PANORAMA DEPTH
+========================================= */
+
+#panorama{
+
+    transform:
+    translateZ(0);
+
+    will-change:
+    transform;
+}
+
+
+/* =========================================
+   DESKTOP HOVER
+========================================= */
+
+@media(min-width:700px){
+
+    .viewer{
+
+        cursor:
+        grab;
+    }
+
+    .viewer:hover{
+
+        box-shadow:
+
+        0 30px 90px
+        rgba(0,0,0,.58),
+
+        0 0 75px
+        rgba(40,170,255,.16);
+    }
+
+}
+
+</style>
+<!-- =================================
+     AI TRAVEL SECTION
+================================= -->
+
+<section class="ai-section">
+
+    <div class="ai-card glass">
+
+        <div class="ai-header">
+
+            <div class="ai-symbol">
+                ✦
+            </div>
+
+            <div>
+
+                <h2>
+                    Ask Travel AI
+                </h2>
+
+                <p>
+                    Tell me where you want to go
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUESTION -->
+
+        <div class="input-wrap">
+
+            <textarea
+                id="questionInput"
+                rows="3"
+                maxlength="500"
+                placeholder="e.g. Best places to visit in Himachal this weekend?"
+            ></textarea>
+
+
+            <div class="input-info">
+
+                <span>
+                    Travel question
+                </span>
+
+                <span id="charCount">
+                    0 / 500
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ANSWER BUTTON -->
+
+        <button
+            id="answerBtn"
+            class="answer-btn"
+            type="button"
+        >
+
+            <span id="btnText">
+                GET ANSWER
+            </span>
+
+            <span class="btn-arrow">
+                →
+            </span>
+
+        </button>
+
+
+        <!-- LOADING -->
+
+        <div
+            id="loadingBox"
+            class="loading-box"
+            hidden
+        >
+
+            <span class="spinner"></span>
+
+            <span>
+                Finding the best travel answer...
+            </span>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorBox"
+            class="error-box"
+            hidden
+        >
+
+            <span>
+                ⚠️
+            </span>
+
+            <p id="errorText">
+                Something went wrong.
+            </p>
+
+        </div>
+
+
+        <!-- ANSWER -->
+
+        <div
+            id="answerBox"
+            class="answer-box"
+            hidden
+        >
+
+            <div class="answer-heading">
+
+                <span>
+                    ✦ AI TRAVEL GUIDE
+                </span>
+
+                <small>
+                    READY
+                </small>
+
+            </div>
+
+
+            <div
+                id="answerText"
+                class="answer-text"
+            ></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     QUICK QUESTIONS
+================================= -->
+
+<section class="quick-section">
+
+    <p class="quick-title">
+        QUICK EXPLORE
+    </p>
+
+
+    <div class="quick-list">
+
+        <button
+            class="quick-btn"
+            data-question="Best places to visit in Himachal Pradesh?"
+        >
+            🏔️ Himachal
+        </button>
+
+
+        <button
+            class="quick-btn"
+            data-question="Suggest a peaceful weekend getaway in India."
+        >
+            🌿 Peaceful
+        </button>
+
+
+        <button
+            class="quick-btn"
+            data-question="Best budget travel destinations in India?"
+        >
+            💰 Budget
+        </button>
+
+
+        <button
+            class="quick-btn"
+            data-question="Suggest a romantic destination in India."
+        >
+            ❤️ Romantic
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     AI SECTION CSS
+================================= -->
+
+<style>
+
+.ai-section{
+
     width:100%;
+
+    padding:
+    10px 16px 15px;
+}
+
+
+.ai-card{
+
+    width:100%;
+
     max-width:680px;
 
-    margin:0 auto;
+    margin:auto;
 
     padding:18px;
 
@@ -798,96 +1436,103 @@ body{
 }
 
 
-/* =====================================
-   AI HEADER
-===================================== */
+/* HEADER */
 
 .ai-header{
+
     display:flex;
+
     align-items:center;
+
     gap:12px;
 
     margin-bottom:17px;
 }
 
-.ai-icon{
-    width:42px;
-    height:42px;
+
+.ai-symbol{
+
+    width:43px;
+    height:43px;
 
     flex-shrink:0;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
     border-radius:14px;
 
-    font-size:20px;
-
     background:
-        linear-gradient(
-            135deg,
-            rgba(0,190,255,.20),
-            rgba(130,80,255,.18)
-        );
+    rgba(90,180,255,.12);
 
     border:
-        1px solid
-        rgba(255,255,255,.13);
+    1px solid
+    rgba(255,255,255,.13);
 
-    box-shadow:
-        inset 0 0 20px
-        rgba(255,255,255,.04);
+    font-size:20px;
 }
 
-.ai-title{
-    font-size:15px;
+
+.ai-header h2{
+
+    font-size:16px;
+
     font-weight:800;
 }
 
-.ai-subtitle{
+
+.ai-header p{
+
     margin-top:3px;
 
     font-size:10px;
 
     color:
-        rgba(255,255,255,.48);
+    rgba(255,255,255,.45);
 }
 
 
-/* =====================================
-   QUESTION BOX
-===================================== */
+/* INPUT */
 
-.question-box{
-    padding:13px 14px 9px;
+.input-wrap{
+
+    padding:
+    13px 14px 9px;
 
     border-radius:18px;
 
     background:
-        rgba(0,0,0,.18);
+    rgba(0,0,0,.22);
 
     border:
-        1px solid
-        rgba(255,255,255,.09);
+    1px solid
+    rgba(255,255,255,.10);
 
     transition:
-        border-color .25s ease,
-        background .25s ease;
+    border-color .25s ease,
+    background .25s ease;
 }
 
-.question-box:focus-within{
+
+.input-wrap:focus-within{
+
     border-color:
-        rgba(130,205,255,.35);
+    rgba(110,205,255,.38);
 
     background:
-        rgba(0,0,0,.25);
+    rgba(0,0,0,.30);
 }
 
-.question-box textarea{
+
+.input-wrap textarea{
+
+    display:block;
+
     width:100%;
 
-    min-height:78px;
+    min-height:76px;
 
     resize:none;
 
@@ -901,107 +1546,107 @@ body{
     font-family:inherit;
 
     font-size:14px;
+
     line-height:1.55;
 }
 
-.question-box textarea::placeholder{
+
+.input-wrap textarea::placeholder{
+
     color:
-        rgba(255,255,255,.34);
+    rgba(255,255,255,.32);
 }
 
-.input-bottom{
+
+.input-info{
+
     display:flex;
-    justify-content:space-between;
+
     align-items:center;
 
-    padding-top:6px;
+    justify-content:space-between;
 
-    font-size:9px;
+    padding-top:7px;
+
+    font-size:8px;
 
     color:
-        rgba(255,255,255,.34);
-}
-
-.input-hint{
-    letter-spacing:.8px;
-    text-transform:uppercase;
+    rgba(255,255,255,.30);
 }
 
 
-/* =====================================
-   ANSWER BUTTON
-===================================== */
+/* BUTTON */
 
 .answer-btn{
+
     position:relative;
 
     width:100%;
 
-    margin-top:12px;
-
     min-height:54px;
 
+    margin-top:12px;
+
     border:none;
-    outline:none;
 
     border-radius:17px;
 
     cursor:pointer;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
 
     color:#fff;
 
     font-family:inherit;
 
     font-size:12px;
+
     font-weight:900;
 
     letter-spacing:1.5px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(35,155,220,.92),
-            rgba(91,68,210,.92)
-        );
+    linear-gradient(
+        135deg,
+        rgba(32,155,220,.95),
+        rgba(92,67,210,.95)
+    );
 
     box-shadow:
-        0 12px 35px
-        rgba(30,120,220,.20);
+    0 12px 35px
+    rgba(30,120,220,.20);
 
     transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        filter .2s ease;
+    transform .2s ease,
+    filter .2s ease;
 }
 
-.answer-btn:hover{
-    filter:brightness(1.08);
-
-    box-shadow:
-        0 16px 45px
-        rgba(40,130,230,.28);
-}
 
 .answer-btn:active{
-    transform:scale(.98);
+
+    transform:
+    scale(.98);
 }
+
+
+.answer-btn:hover{
+
+    filter:
+    brightness(1.08);
+}
+
 
 .answer-btn:disabled{
-    opacity:.65;
-    cursor:not-allowed;
+
+    opacity:.60;
+
+    cursor:
+    not-allowed;
 }
 
-.btn-icon{
-    font-size:16px;
-}
 
 .btn-arrow{
+
     position:absolute;
+
     right:18px;
 
     font-size:19px;
@@ -1010,51 +1655,56 @@ body{
 }
 
 
-/* =====================================
-   LOADING
-===================================== */
+/* LOADING */
 
 .loading-box{
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     gap:10px;
 
-    margin-top:14px;
+    margin-top:13px;
 
-    padding:14px;
+    padding:13px;
 
     border-radius:15px;
 
     background:
-        rgba(255,255,255,.045);
+    rgba(255,255,255,.045);
 
     border:
-        1px solid
-        rgba(255,255,255,.07);
+    1px solid
+    rgba(255,255,255,.08);
 
-    font-size:11px;
+    font-size:10px;
 
     color:
-        rgba(255,255,255,.62);
+    rgba(255,255,255,.60);
 }
 
-.loading-spinner{
+
+.spinner{
+
     width:16px;
     height:16px;
 
     border-radius:50%;
 
     border:
-        2px solid
-        rgba(255,255,255,.18);
+    2px solid
+    rgba(255,255,255,.18);
 
     border-top-color:
-        rgba(255,255,255,.9);
+    rgba(255,255,255,.90);
 
     animation:
-        spin .8s linear infinite;
+    spin .8s linear infinite;
 }
+
 
 @keyframes spin{
 
@@ -1065,14 +1715,15 @@ body{
 }
 
 
-/* =====================================
-   MESSAGE BOX
-===================================== */
+/* ERROR */
 
-.message-box{
+.error-box{
+
     display:flex;
+
     align-items:flex-start;
-    gap:10px;
+
+    gap:9px;
 
     margin-top:13px;
 
@@ -1080,32 +1731,26 @@ body{
 
     border-radius:15px;
 
-    font-size:11px;
+    background:
+    rgba(255,70,70,.08);
+
+    border:
+    1px solid
+    rgba(255,100,100,.16);
+
+    color:
+    rgba(255,190,190,.90);
+
+    font-size:10px;
+
     line-height:1.5;
 }
 
-.error-message{
-    background:
-        rgba(255,70,70,.08);
 
-    border:
-        1px solid
-        rgba(255,100,100,.16);
-
-    color:
-        rgba(255,190,190,.9);
-}
-
-.message-icon{
-    font-size:14px;
-}
-
-
-/* =====================================
-   ANSWER BOX
-===================================== */
+/* ANSWER */
 
 .answer-box{
+
     margin-top:14px;
 
     padding:16px;
@@ -1113,254 +1758,204 @@ body{
     border-radius:18px;
 
     background:
-        rgba(0,0,0,.16);
+    rgba(0,0,0,.20);
 
     border:
-        1px solid
-        rgba(255,255,255,.10);
+    1px solid
+    rgba(255,255,255,.10);
 
     animation:
-        answerAppear .4s ease;
+    answerIn .4s ease;
 }
 
-@keyframes answerAppear{
+
+@keyframes answerIn{
 
     from{
         opacity:0;
-        transform:translateY(8px);
+        transform:
+        translateY(8px);
     }
 
     to{
         opacity:1;
-        transform:translateY(0);
+        transform:
+        translateY(0);
     }
 
 }
 
-.answer-top{
+
+.answer-heading{
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     margin-bottom:12px;
 }
 
-.answer-label{
+
+.answer-heading span{
+
     font-size:9px;
+
     font-weight:800;
 
-    letter-spacing:1.5px;
+    letter-spacing:1.3px;
 
     color:
-        rgba(150,215,255,.85);
+    rgba(150,215,255,.85);
 }
 
-.answer-status{
-    padding:4px 7px;
+
+.answer-heading small{
+
+    padding:
+    4px 7px;
 
     border-radius:6px;
 
     font-size:7px;
-    font-weight:800;
 
     letter-spacing:1px;
 
     background:
-        rgba(80,220,150,.08);
+    rgba(80,220,150,.08);
 
     color:
-        rgba(110,235,170,.8);
+    rgba(110,235,170,.85);
 }
 
+
 .answer-text{
+
     white-space:pre-wrap;
 
     font-size:13px;
+
     line-height:1.7;
 
     color:
-        rgba(255,255,255,.82);
+    rgba(255,255,255,.82);
 }
 
 
-/* =====================================
-   QUICK QUESTIONS
-===================================== */
+/* QUICK QUESTIONS */
 
 .quick-section{
+
     width:100%;
+
     max-width:680px;
 
-    margin:0 auto;
+    margin:auto;
 
     padding:
-        15px
-        16px
-        10px;
+    5px 16px 20px;
 }
+
 
 .quick-title{
+
     margin-bottom:10px;
 
-    font-size:9px;
+    font-size:8px;
 
-    font-weight:700;
+    font-weight:800;
 
-    letter-spacing:1.5px;
-
-    text-transform:uppercase;
+    letter-spacing:1.6px;
 
     color:
-        rgba(255,255,255,.38);
+    rgba(255,255,255,.35);
 }
 
+
 .quick-list{
+
     display:flex;
 
     gap:8px;
 
     overflow-x:auto;
 
-    padding-bottom:4px;
-
     scrollbar-width:none;
 }
 
+
 .quick-list::-webkit-scrollbar{
+
     display:none;
 }
 
+
 .quick-btn{
+
     flex-shrink:0;
 
-    padding:9px 12px;
+    padding:
+    9px 12px;
 
     border-radius:30px;
 
     border:
-        1px solid
-        rgba(255,255,255,.10);
+    1px solid
+    rgba(255,255,255,.10);
 
     background:
-        rgba(255,255,255,.055);
+    rgba(255,255,255,.055);
 
     color:
-        rgba(255,255,255,.68);
+    rgba(255,255,255,.70);
 
     font-family:inherit;
 
     font-size:10px;
 
     cursor:pointer;
-
-    backdrop-filter:blur(10px);
-
-    transition:
-        background .2s ease,
-        transform .2s ease;
 }
 
-.quick-btn:hover{
-    background:
-        rgba(255,255,255,.10);
-}
 
 .quick-btn:active{
-    transform:scale(.96);
+
+    transform:
+    scale(.96);
 }
 
 
-/* =====================================
-   FOOTER
-===================================== */
-
-.footer{
-    width:100%;
-
-    padding:
-        30px
-        20px
-        35px;
-
-    text-align:center;
-
-    color:
-        rgba(255,255,255,.30);
-}
-
-.footer-line{
-    width:50px;
-    height:1px;
-
-    margin:
-        0 auto
-        14px;
-
-    background:
-        rgba(255,255,255,.14);
-}
-
-.footer p{
-    font-size:9px;
-
-    margin-bottom:5px;
-}
-
-.footer span{
-    font-size:8px;
-
-    letter-spacing:2px;
-
-    color:
-        rgba(255,255,255,.18);
-}
-
-
-/* =====================================
-   DESKTOP
-===================================== */
+/* DESKTOP */
 
 @media(min-width:700px){
 
-    .ai-section{
-        padding-top:25px;
-    }
-
     .ai-card{
+
         padding:24px;
     }
 
-    .question-box textarea{
-        font-size:15px;
-    }
-
     .quick-section{
-        padding-top:20px;
+
+        padding-bottom:35px;
     }
 
 }
 
-              </style>
-     <script>
+   </style>
+   <script>
 
-/* =====================================
+/* =========================================
    KAINTHLA TRAVEL AI
-   API CONFIGURATION
-===================================== */
-
-/*
-   IMPORTANT:
-   Apna existing Google Apps Script
-   endpoint yahan paste karo.
-*/
+   GOOGLE APPS SCRIPT CONNECTION
+========================================= */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwxZhBDGOTa4TFN2XAg_ihpIuvVbjJPiDzGt3vpyfugm0Y8cL4gVvR7mK8sV3g/exec";
+"https://script.google.com/macros/s/AKfycbwxZhBDGOTa4TFN2XAg_ihpIuvVbjJPiDzGt3vpyfuOqZdUXHzOYZ-YoP1Pe7tJZk-ldg/exec";
 
 
-/* =====================================
-   ELEMENTS
-===================================== */
+/* =========================================
+   GET ELEMENTS
+========================================= */
 
 const questionInput =
     document.getElementById("questionInput");
@@ -1374,43 +1969,40 @@ const btnText =
 const loadingBox =
     document.getElementById("loadingBox");
 
-const answerBox =
-    document.getElementById("answerBox");
-
-const answerText =
-    document.getElementById("answerText");
-
 const errorBox =
     document.getElementById("errorBox");
 
 const errorText =
     document.getElementById("errorText");
 
+const answerBox =
+    document.getElementById("answerBox");
+
+const answerText =
+    document.getElementById("answerText");
+
 const charCount =
     document.getElementById("charCount");
 
 
-/* =====================================
+/* =========================================
    CHARACTER COUNTER
-===================================== */
+========================================= */
 
 questionInput.addEventListener(
     "input",
     function(){
 
-        const length =
-            this.value.length;
-
         charCount.textContent =
-            length + " / 500";
+            this.value.length + " / 500";
 
     }
 );
 
 
-/* =====================================
+/* =========================================
    QUICK QUESTIONS
-===================================== */
+========================================= */
 
 document.querySelectorAll(
     ".quick-btn"
@@ -1421,9 +2013,7 @@ document.querySelectorAll(
         function(){
 
             const question =
-                this.getAttribute(
-                    "data-question"
-                );
+                this.dataset.question;
 
             questionInput.value =
                 question;
@@ -1439,57 +2029,40 @@ document.querySelectorAll(
 });
 
 
-/* =====================================
-   ENTER KEY
-===================================== */
+/* =========================================
+   ERROR
+========================================= */
 
-questionInput.addEventListener(
-    "keydown",
-    function(event){
+function showError(message){
 
-        /*
-           Mobile par Enter normal rahega.
-           Desktop par Ctrl + Enter se answer.
-        */
+    errorText.textContent =
+        message;
 
-        if(
-            event.key === "Enter" &&
-            event.ctrlKey
-        ){
+    errorBox.hidden =
+        false;
 
-            event.preventDefault();
-
-            getTravelAnswer();
-
-        }
-
-    }
-);
+}
 
 
-/* =====================================
-   BUTTON CLICK
-===================================== */
+function hideError(){
 
-answerBtn.addEventListener(
-    "click",
-    getTravelAnswer
-);
+    errorBox.hidden =
+        true;
+
+}
 
 
-/* =====================================
-   MAIN AI FUNCTION
-===================================== */
+/* =========================================
+   GET ANSWER
+========================================= */
 
-async function getTravelAnswer(){
+async function getAnswer(){
 
     const question =
         questionInput.value.trim();
 
 
-    /* -------------------------------
-       VALIDATION
-    -------------------------------- */
+    /* EMPTY QUESTION */
 
     if(!question){
 
@@ -1504,30 +2077,15 @@ async function getTravelAnswer(){
     }
 
 
-    if(question.length < 3){
-
-        showError(
-            "Please enter a little more detail so the AI can help you."
-        );
-
-        questionInput.focus();
-
-        return;
-
-    }
-
-
-    /* -------------------------------
-       RESET UI
-    -------------------------------- */
+    /* START LOADING */
 
     hideError();
 
-    answerBox.style.display =
-        "none";
+    answerBox.hidden =
+        true;
 
-    loadingBox.style.display =
-        "flex";
+    loadingBox.hidden =
+        false;
 
     answerBtn.disabled =
         true;
@@ -1539,11 +2097,11 @@ async function getTravelAnswer(){
     try{
 
         /*
-           Google Apps Script ko
-           question bhejna.
+           Question Google Apps Script
+           ko send ki ja rahi hai.
         */
 
-        const url =
+        const requestURL =
             API_URL +
             "?question=" +
             encodeURIComponent(question);
@@ -1551,7 +2109,7 @@ async function getTravelAnswer(){
 
         const response =
             await fetch(
-                url,
+                requestURL,
                 {
                     method:"GET",
                     redirect:"follow"
@@ -1559,24 +2117,68 @@ async function getTravelAnswer(){
             );
 
 
+        /* HTTP ERROR */
+
         if(!response.ok){
 
             throw new Error(
-                "Server returned " +
+                "HTTP " +
                 response.status
             );
 
         }
 
 
-        const data =
-            await response.json();
+        /* =================================
+           READ RESPONSE
+        ================================= */
+
+        const contentType =
+            response.headers.get(
+                "content-type"
+            ) || "";
 
 
-        /*
-           API response ke common formats
-           handle kiye gaye hain.
-        */
+        let data;
+
+
+        if(
+            contentType.includes(
+                "application/json"
+            )
+        ){
+
+            data =
+                await response.json();
+
+        }
+
+        else{
+
+            const text =
+                await response.text();
+
+
+            try{
+
+                data =
+                    JSON.parse(text);
+
+            }
+
+            catch{
+
+                data =
+                    text;
+
+            }
+
+        }
+
+
+        /* =================================
+           FIND AI ANSWER
+        ================================= */
 
         let result = "";
 
@@ -1591,41 +2193,22 @@ async function getTravelAnswer(){
         }
 
         else if(
-            data.answer
+            data &&
+            typeof data === "object"
         ){
 
             result =
-                data.answer;
+                data.answer ||
+                data.response ||
+                data.result ||
+                data.message ||
+                data.text ||
+                "";
 
         }
 
-        else if(
-            data.response
-        ){
 
-            result =
-                data.response;
-
-        }
-
-        else if(
-            data.result
-        ){
-
-            result =
-                data.result;
-
-        }
-
-        else if(
-            data.message
-        ){
-
-            result =
-                data.message;
-
-        }
-
+        /* EMPTY RESPONSE */
 
         if(
             !result ||
@@ -1633,26 +2216,24 @@ async function getTravelAnswer(){
         ){
 
             throw new Error(
-                "The AI returned an empty response."
+                "Empty AI response"
             );
 
         }
 
 
-        /* -------------------------------
-           SHOW ANSWER
-        -------------------------------- */
+        /* =================================
+           DISPLAY ANSWER
+        ================================= */
 
         answerText.textContent =
             String(result).trim();
 
-        answerBox.style.display =
-            "block";
+        answerBox.hidden =
+            false;
 
 
-        /*
-           Answer tak smooth scroll.
-        */
+        /* SMOOTH SCROLL */
 
         setTimeout(
             function(){
@@ -1669,24 +2250,26 @@ async function getTravelAnswer(){
 
     }
 
+
     catch(error){
 
         console.error(
-            "Travel AI Error:",
+            "Kainthla Travel AI Error:",
             error
         );
 
 
         showError(
-            "Unable to connect with Travel AI right now. Please check your internet connection or try again in a moment."
+            "Travel AI is temporarily unavailable. Please check your internet connection and try again."
         );
 
     }
 
+
     finally{
 
-        loadingBox.style.display =
-            "none";
+        loadingBox.hidden =
+            true;
 
         answerBtn.disabled =
             false;
@@ -1699,269 +2282,233 @@ async function getTravelAnswer(){
 }
 
 
-/* =====================================
-   ERROR FUNCTIONS
-===================================== */
+/* =========================================
+   BUTTON CLICK
+========================================= */
 
-function showError(message){
-
-    errorText.textContent =
-        message;
-
-    errorBox.style.display =
-        "flex";
-
-}
+answerBtn.addEventListener(
+    "click",
+    getAnswer
+);
 
 
-function hideError(){
+/* =========================================
+   CTRL + ENTER
+========================================= */
 
-    errorBox.style.display =
-        "none";
+questionInput.addEventListener(
+    "keydown",
+    function(event){
 
-}
+        if(
+            event.key === "Enter" &&
+            event.ctrlKey
+        ){
 
+            event.preventDefault();
 
-/* =====================================
-   INITIAL STATE
-===================================== */
+            getAnswer();
 
-window.addEventListener(
-    "load",
-    function(){
-
-        questionInput.value =
-            "";
-
-        charCount.textContent =
-            "0 / 500";
-
-        loadingBox.style.display =
-            "none";
-
-        answerBox.style.display =
-            "none";
-
-        errorBox.style.display =
-            "none";
+        }
 
     }
 );
 
-          </script>   
-      <script>
 
-/* =====================================
-   TRAVEL 360° CINEMATIC MOTION
-===================================== */
+/* =========================================
+   BACKGROUND PARALLAX
+========================================= */
 
-const travel360 =
-    document.getElementById("travel360");
+const panorama =
+    document.getElementById("panorama");
 
-let mouseX = 0;
-let mouseY = 0;
+let targetX = 0;
+
 let currentX = 0;
-let currentY = 0;
 
-
-/* Desktop movement */
 
 document.addEventListener(
     "mousemove",
     function(event){
 
-        mouseX =
+        targetX =
             (event.clientX /
-            window.innerWidth - 0.5) * 2;
-
-        mouseY =
-            (event.clientY /
-            window.innerHeight - 0.5) * 2;
+            window.innerWidth - 0.5) * 14;
 
     }
 );
 
 
-/* Mobile gyroscope movement */
-
-if(
-    window.DeviceOrientationEvent
-){
-
-    window.addEventListener(
-        "deviceorientation",
-        function(event){
-
-            if(
-                event.gamma !== null &&
-                event.beta !== null
-            ){
-
-                mouseX =
-                    Math.max(
-                        -1,
-                        Math.min(
-                            1,
-                            event.gamma / 35
-                        )
-                    );
-
-                mouseY =
-                    Math.max(
-                        -1,
-                        Math.min(
-                            1,
-                            (event.beta - 45) / 35
-                        )
-                    );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* Smooth movement */
-
-function animate360(){
+function animateBackground(){
 
     currentX +=
-        (mouseX - currentX) * 0.025;
-
-    currentY +=
-        (mouseY - currentY) * 0.025;
+        (targetX - currentX) * 0.025;
 
 
-    travel360.style.transform =
+    panorama.style.transform =
         "translate3d(" +
-        (currentX * -12) +
-        "px," +
-        (currentY * -8) +
-        "px,0) scale(1.08)";
+        currentX +
+        "px,0,0)";
 
 
     requestAnimationFrame(
-        animate360
+        animateBackground
     );
 
 }
 
-animate360();
+
+animateBackground();
 
 
-/* =====================================
-   PAGE ENTRY ANIMATION
-===================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        const hero =
-            document.querySelector(".hero");
-
-        const aiCard =
-            document.querySelector(".ai-card");
-
-        const quickSection =
-            document.querySelector(".quick-section");
-
-
-        if(hero){
-
-            hero.style.opacity = "0";
-            hero.style.transform =
-                "translateY(20px)";
-
-            setTimeout(
-                function(){
-
-                    hero.style.transition =
-                        "opacity .8s ease, transform .8s ease";
-
-                    hero.style.opacity = "1";
-                    hero.style.transform =
-                        "translateY(0)";
-
-                },
-                150
-            );
-
-        }
-
-
-        if(aiCard){
-
-            aiCard.style.opacity = "0";
-            aiCard.style.transform =
-                "translateY(25px)";
-
-            setTimeout(
-                function(){
-
-                    aiCard.style.transition =
-                        "opacity .8s ease, transform .8s ease";
-
-                    aiCard.style.opacity = "1";
-                    aiCard.style.transform =
-                        "translateY(0)";
-
-                },
-                450
-            );
-
-        }
-
-
-        if(quickSection){
-
-            quickSection.style.opacity = "0";
-
-            setTimeout(
-                function(){
-
-                    quickSection.style.transition =
-                        "opacity .8s ease";
-
-                    quickSection.style.opacity =
-                        "1";
-
-                },
-                700
-            );
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   PREVENT ACCIDENTAL FORM SUBMIT
-===================================== */
-
-document.addEventListener(
-    "submit",
-    function(event){
-
-        event.preventDefault();
-
-    }
-);
-
-
-/* =====================================
-   FINAL CONSOLE MESSAGE
-===================================== */
+/* =========================================
+   STARTUP
+========================================= */
 
 console.log(
-    "✈️ Kainthla Travel AI initialized."
+    "✈️ Kainthla Travel AI is ready."
 );
 
 </script>
 
 
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer class="footer">
+
+    <div class="footer-line"></div>
+
+    <p>
+        Crafted for curious travellers
+    </p>
+
+    <span>
+        KAINTHLA TRAVEL AI
+    </span>
+
+</footer>
+
+
+<style>
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer{
+
+    width:100%;
+
+    padding:
+    30px 20px 35px;
+
+    text-align:center;
+
+    color:
+    rgba(255,255,255,.32);
+}
+
+
+.footer-line{
+
+    width:50px;
+
+    height:1px;
+
+    margin:
+    0 auto 14px;
+
+    background:
+    rgba(255,255,255,.15);
+}
+
+
+.footer p{
+
+    font-size:9px;
+
+    margin-bottom:5px;
+}
+
+
+.footer span{
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    color:
+    rgba(255,255,255,.20);
+}
+
+
+/* =========================================
+   HIDDEN
+========================================= */
+
+[hidden]{
+
+    display:none !important;
+
+}
+
+
+/* =========================================
+   BUTTON / TEXTAREA
+========================================= */
+
+button,
+textarea{
+
+    -webkit-tap-highlight-color:
+    transparent;
+
+}
+
+
+/* =========================================
+   FINAL MOBILE
+========================================= */
+
+@media(max-width:480px){
+
+    .ai-section{
+
+        padding-top:5px;
+
+    }
+
+    .ai-card{
+
+        border-radius:24px;
+
+    }
+
+}
+
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+@media(min-width:700px){
+
+    .footer{
+
+        padding-bottom:45px;
+
+    }
+
+}
+
+</style>
+
+
+</div>
+
+
 </body>
+
 </html>

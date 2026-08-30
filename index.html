@@ -2044,15 +2044,13 @@ console.log(
 </style>
       <script>
 
-                        
-
 /* =========================================
    KAINTHLA TRAVEL AI
    GOOGLE APPS SCRIPT CONNECTION
 ========================================= */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwvbNW-Gy-C39sCrU416gkqlhNbqflN5CDxjCzAVl0WniA_efyi68ww5TRLuFZPlIwF/exec";
+"https://script.google.com/macros/s/AKfycbynz1bR57negRGkATl0bBM7MIeBSbaJyR39EcmyUqriLF_V2q8bDOzq8jiOHwYCXbIK/exec";
 
 
 /* =========================================
@@ -2122,7 +2120,8 @@ document.querySelectorAll(
                 this.dataset.question || "";
 
             if(questionInput){
-                questionInput.value = question;
+                questionInput.value =
+                    question;
             }
 
             if(charCount){
@@ -2147,11 +2146,13 @@ document.querySelectorAll(
 function showError(message){
 
     if(errorText){
-        errorText.textContent = message;
+        errorText.textContent =
+            message;
     }
 
     if(errorBox){
-        errorBox.hidden = false;
+        errorBox.hidden =
+            false;
     }
 
 }
@@ -2160,7 +2161,8 @@ function showError(message){
 function hideError(){
 
     if(errorBox){
-        errorBox.hidden = true;
+        errorBox.hidden =
+            true;
     }
 
 }
@@ -2195,11 +2197,14 @@ async function getAnswer(){
 
     hideError();
 
-    answerBox.hidden = true;
+    answerBox.hidden =
+        true;
 
-    loadingBox.hidden = false;
+    loadingBox.hidden =
+        false;
 
-    answerBtn.disabled = true;
+    answerBtn.disabled =
+        true;
 
     btnText.textContent =
         "THINKING...";
@@ -2250,7 +2255,7 @@ async function getAnswer(){
            READ RESPONSE
         ================================= */
 
-        const text =
+         const text =
             await response.text();
 
 
@@ -2341,8 +2346,77 @@ async function getAnswer(){
 
         }
 
+          if(
+            !result ||
+            !String(result).trim()
+        ){
+
+            throw new Error(
+                "Empty AI response."
+            );
+
+        }
+
 
         /* =================================
+           DISPLAY ANSWER
+        ================================= */
+
+        answerText.textContent =
+            String(result).trim();
+
+        answerBox.hidden =
+            false;
+
+
+        /* SMOOTH SCROLL */
+
+        setTimeout(
+            function(){
+
+                answerBox.scrollIntoView({
+                    behavior:"smooth",
+                    block:"center"
+                });
+
+            },
+            100
+        );
+
+
+    }
+
+
+    catch(error){
+
+        console.error(
+            "Kainthla Travel AI Error:",
+            error
+        );
+
+
+        showError(
+            "Travel AI is temporarily unavailable. Please try again."
+        );
+
+    }
+
+
+    finally{
+
+        loadingBox.hidden =
+            true;
+
+        answerBtn.disabled =
+            false;
+
+        btnText.textContent =
+            "GET ANSWER";
+
+    }
+
+}
+ /* =================================
            DISPLAY ANSWER
         ================================= */
 
@@ -2495,8 +2569,7 @@ function animateBackground(){
 
 animateBackground();
 
-
-/* =========================================
+            /* =========================================
    STARTUP
 ========================================= */
 
@@ -2643,3 +2716,19 @@ textarea{
 }
 
 </style>
+
+</div>
+
+</body>
+
+</html>
+
+  
+
+                        
+
+
+    
+                
+     
+    
